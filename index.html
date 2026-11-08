@@ -55,6 +55,8 @@ section{padding:50px 0}
 .more a:hover{text-decoration:underline}
 .price{display:flex;align-items:center;gap:16px}
 .amt{font-size:26px;font-weight:300;letter-spacing:.04em}
+.dl{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}.dl .btn.ghost{margin-left:0}
+.dlnote{font-size:13px;color:var(--faint);margin:14px 0 0;line-height:1.5}.dlnote b{color:var(--muted)}
 .soon{display:inline-block;padding:7px 16px;border-radius:999px;border:1px solid rgba(141,220,255,.5);color:var(--cyan);font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase}
 .shot{width:100%;height:auto;border-radius:10px;border:1px solid var(--line);box-shadow:0 10px 30px rgba(0,0,0,.35)}
 .vis{width:100%;max-width:440px;aspect-ratio:4/3;border-radius:12px;background:radial-gradient(circle at 50% 0,rgba(26,79,196,.3),transparent 60%),var(--display);border:1px solid var(--line);display:flex;flex-direction:column;justify-content:space-between;padding:22px}
@@ -146,15 +148,21 @@ footer{border-top:1px solid var(--line);margin-top:40px;padding:30px 0;color:var
 <div class="product">
 <div class="info">
 <div class="pname">Convert</div>
-<div class="caps ptype">Media converter for Mac</div>
+<div class="caps ptype">Media converter · Mac &amp; Windows · v0.1.0</div>
 <p>Drop in any audio or video file and get exactly the format you need. Batch queues, hardware acceleration and presets that just make sense.</p>
 <ul class="feats">
-<li>Video: MP4, MOV, MKV, WebM, animated GIF</li>
-<li>Audio: MP3, M4A, WAV, FLAC, or extract the original track</li>
-<li>Hardware-accelerated encoding on Apple Silicon</li>
+<li>Drag and drop any video or audio file</li>
+<li>Presets: MP4 for any device, small MP4 for sharing, MOV, MKV, WebM, animated GIF</li>
+<li>Audio: MP3, M4A/AAC, WAV, FLAC, Opus, AIFF, or extract the original track</li>
+<li>Lossless fast copy when no re-encode is needed</li>
+<li>Hardware H.264 encoding on Mac and Windows GPUs</li>
+<li>Batch queue with progress</li>
+<li>Free, no license or iLok needed</li>
 </ul>
-<div class="pills"><span class="pill on">macOS</span><span class="pill">Apple Silicon</span><span class="pill">Intel</span></div>
-<div class="price"><span class="amt">Free</span><span class="soon">Coming soon</span></div>
+<div class="pills"><span class="pill on">macOS 11+ · Apple Silicon</span><span class="pill on">Windows 10/11 · x64</span></div>
+<div class="price"><span class="amt">Free</span></div>
+<div class="dl"><a class="btn primary" href="/download/convert-mac" download>Download for Mac</a><a class="btn ghost" href="/download/convert-windows" download>Download for Windows</a></div>
+<p class="dlnote">Signed installers are on the way. Until then your computer may warn on first launch. On Mac: open System Settings › Privacy &amp; Security and click <b>Open Anyway</b>. On Windows: click <b>More info</b> › <b>Run anyway</b>.</p>
 </div>
 <div class="media"><img class="shot" src="img/convert.jpg" alt="Convert app converting a queue of files" loading="lazy"></div>
 </div>
