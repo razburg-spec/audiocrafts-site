@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chroma User Guide · Raz Burg AudioCrafts</title>
+<meta name="description" content="User guide for Chroma, the multi-character compressor plugin by Raz Burg AudioCrafts.">
+<link rel="icon" href="../../img/logo.svg">
+<style>
+:root{--bg:#11161D;--surface:#19212B;--line:#2B3542;--text:#F2F5F9;--muted:#97A3B2;--faint:#4A5666;--blue:#6F9CFF;--cyan:#8DDCFF}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--muted);font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif}
+header{display:flex;align-items:center;gap:12px;padding:18px 24px;border-bottom:1px solid var(--line)}
+header a{color:var(--text);text-decoration:none;display:flex;align-items:center;gap:12px;font-weight:600;letter-spacing:.08em}
+header img{width:32px;height:32px}header .back{margin-left:auto;color:var(--cyan);font-weight:500;letter-spacing:0;font-size:14px}
+.wrap{max-width:1080px;margin:0 auto;padding:32px 24px 80px;display:grid;grid-template-columns:220px 1fr;gap:48px}
+nav{position:sticky;top:24px;align-self:start;display:flex;flex-direction:column;gap:6px;font-size:14px}
+nav a{color:var(--muted);text-decoration:none}nav a:hover{color:var(--cyan)}
+main{min-width:0}h1{color:var(--text);font-size:34px;margin:0 0 12px}
+h2{color:var(--cyan);font-size:13px;letter-spacing:.16em;text-transform:uppercase;margin:40px 0 10px;padding-top:18px;border-top:1px solid var(--line)}
+b{color:var(--text);font-weight:600}ul{padding-left:20px}li{margin:6px 0}li::marker{color:var(--cyan)}
+.shot{width:100%;border-radius:12px;border:1px solid var(--line);margin:18px 0 6px}
+@media (max-width:760px){.wrap{grid-template-columns:1fr;gap:16px}nav{position:static;flex-direction:row;flex-wrap:wrap;gap:6px 14px}}
+</style></head><body>
+<header><a href="../../"><img src="../../img/logo.svg" alt="">RAZ BURG AUDIOCRAFTS</a><a class="back" href="../../#chroma">Back to Chroma</a></header>
+<div class="wrap"><nav><a href="#quick-start">Quick start</a><a href="#characters">Characters</a><a href="#controls">Controls</a><a href="#key-sidechain">Key (sidechain)</a><a href="#meters">Meters</a><a href="#tips">Tips</a><a href="#licence">Licence</a></nav><main>
+<img class="shot" src="../../img/chroma.jpg" alt="Chroma plugin window">
+<h1>Chroma User Guide</h1>
+<p>Chroma is a compressor with six characters by Raz Burg AudioCrafts. One knob changes the whole voice of the compressor: how it listens, how hard it bends in, how it lets go and how its saturation sounds. Input drives the signal into a fixed threshold, the way classic hardware works.</p>
+<h2 id="quick-start">Quick start</h2>
+<ul>
+<li><b>Chroma opens with no processing:</b> Ratio 1:1, Input and Output at 0 dB, no Saturation, Soft Clip off. Your track passes through untouched.</li>
+<li>Turn up Ratio (try 4:1), then raise Input until the meter shows a few dB of gain reduction.</li>
+<li>Turn the Character knob to hear the six voices. Use Output to match the level.</li>
+<li>Pick a starting point from the preset menu in the toolbar, then adjust to taste.</li>
+<li>Undo and Redo step through your last 100 changes. Reset returns everything to the initial state (no processing).</li>
+</ul>
+<h2 id="characters">Characters</h2>
+<ul>
+<li><b>Vintage:</b> optical-tube leveling. A soft knee, an averaging detector and a release that slows down the longer it works. Smooth on vocals and bass.</li>
+<li><b>Retro:</b> fast transistor punch. Peak detection with a firm knee and very fast attack times. Its saturation grows as it compresses harder. Bright and forward.</li>
+<li><b>Chubby:</b> variable-tube thickness. A very wide knee, so it is gentle at first and gets firmer the harder you push. Rich, thick saturation. Great on masters and groups.</li>
+<li><b>Indie:</b> raw and gritty. A hard knee and gritty saturation. Past 10:1 it over-compresses: the louder the input, the quieter the output, for pumping and inside-out effects.</li>
+<li><b>Modern:</b> clean and precise. Controls dynamics without adding color; its saturation is the most transparent.</li>
+<li><b>Bus:</b> mix-bus glue. A dual release that recovers fast after short peaks and holds back after long passages. Made for the mix bus, groups and mastering.</li>
+</ul>
+<h2 id="controls">Controls</h2>
+<ul>
+<li><b>Character:</b> the large knob in the centre. Drag it, scroll it, or click a name. The whole interface takes on the character&#x27;s color.</li>
+<li><b>Input:</b> drives the signal into the compressor. More Input means more compression.</li>
+<li><b>Output:</b> level of the processed signal (make-up gain).</li>
+<li><b>Attack:</b> how fast the compressor grabs (0.05 ms to 200 ms). Each character has its own fastest attack.</li>
+<li><b>Release:</b> how fast it lets go (20 ms to 3 s).</li>
+<li><b>Ratio:</b> how hard it compresses, from 1:1 (no compression) to 20:1.</li>
+<li><b>Saturation:</b> harmonic saturation in the voice of the current character. At 0% it is off.</li>
+<li><b>Parallel:</b> blends the untouched source (0%) with the processed signal (100%) for parallel compression.</li>
+<li><b>Soft Clip:</b> a soft clipper on the final output that rounds off peaks above about -4 dBFS and keeps them below 0 dBFS.</li>
+</ul>
+<h2 id="key-sidechain">Key (sidechain)</h2>
+<ul>
+<li><b>Key:</b> switches the key on. When it is off, the compressor listens to the track itself.</li>
+<li><b>External:</b> the compressor listens to the host&#x27;s sidechain input. In Pro Tools pick a bus in the Key Input menu at the top of the plugin window; in Cubase activate the side-chain button and route a send to it. If nothing is routed, Chroma uses the track and says so on the meter.</li>
+<li><b>Freq Key:</b> the compressor listens only to one frequency band of the track, set with Freq from 50 Hz to 16 kHz. Use it to tame sibilance around 5 to 8 kHz or a harsh resonance.</li>
+<li><b>Listen:</b> hear exactly what triggers the compressor, to find the right frequency or check the sidechain.</li>
+</ul>
+<h2 id="meters">Meters</h2>
+<ul>
+<li><b>Gain reduction:</b> the needle shows how many dB the compressor is taking off, with a short peak marker.</li>
+<li><b>In / Out:</b> peak levels going into the compressor (after Input) and leaving the plugin.</li>
+</ul>
+<h2 id="tips">Tips</h2>
+<ul>
+<li><b>Vocals:</b> Vintage or Retro, 3:1 to 4:1, 3 to 6 dB of reduction.</li>
+<li><b>Drums:</b> Retro or Indie with Parallel around 30 to 50% for weight without losing the transients.</li>
+<li><b>Mix bus:</b> Bus at 2:1 to 4:1, slow attack (10 to 30 ms), 1 to 3 dB of reduction.</li>
+<li><b>Sibilance:</b> Modern, Key on, Freq Key at 6 to 7 kHz, fast attack and release.</li>
+</ul>
+<h2 id="licence">Licence</h2>
+<ul>
+<li>Chroma is free. It is protected with iLok: sign in with your free iLok account and activate it on up to two computers. To move it to another computer, deactivate it in iLok License Manager first.</li>
+</ul>
+</main></div></body></html>

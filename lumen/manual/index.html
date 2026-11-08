@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lumen User Guide · Raz Burg AudioCrafts</title>
+<meta name="description" content="User guide for Lumen, the reverb, delay and shimmer plugin by Raz Burg AudioCrafts.">
+<link rel="icon" href="../../img/logo.svg">
+<style>
+:root{--bg:#11161D;--surface:#19212B;--line:#2B3542;--text:#F2F5F9;--muted:#97A3B2;--faint:#4A5666;--blue:#6F9CFF;--cyan:#8DDCFF}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--muted);font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif}
+header{display:flex;align-items:center;gap:12px;padding:18px 24px;border-bottom:1px solid var(--line)}
+header a{color:var(--text);text-decoration:none;display:flex;align-items:center;gap:12px;font-weight:600;letter-spacing:.08em}
+header img{width:32px;height:32px}header .back{margin-left:auto;color:var(--cyan);font-weight:500;letter-spacing:0;font-size:14px}
+.wrap{max-width:1080px;margin:0 auto;padding:32px 24px 80px;display:grid;grid-template-columns:220px 1fr;gap:48px}
+nav{position:sticky;top:24px;align-self:start;display:flex;flex-direction:column;gap:6px;font-size:14px}
+nav a{color:var(--muted);text-decoration:none}nav a:hover{color:var(--cyan)}
+main{min-width:0}h1{color:var(--text);font-size:34px;margin:0 0 12px}
+h2{color:var(--cyan);font-size:13px;letter-spacing:.16em;text-transform:uppercase;margin:40px 0 10px;padding-top:18px;border-top:1px solid var(--line)}
+b{color:var(--text);font-weight:600}ul{padding-left:20px}li{margin:6px 0}li::marker{color:var(--cyan)}
+.shot{width:100%;border-radius:12px;border:1px solid var(--line);margin:18px 0 6px}
+@media (max-width:760px){.wrap{grid-template-columns:1fr;gap:16px}nav{position:static;flex-direction:row;flex-wrap:wrap;gap:6px 14px}}
+</style></head><body>
+<header><a href="../../"><img src="../../img/logo.svg" alt="">RAZ BURG AUDIOCRAFTS</a><a class="back" href="../../#lumen">Back to Lumen</a></header>
+<div class="wrap"><nav><a href="#quick-start">Quick start</a><a href="#toolbar">Toolbar</a><a href="#header">Header</a><a href="#display">Display</a><a href="#delay">Delay</a><a href="#shimmer">Shimmer</a><a href="#reverb">Reverb</a><a href="#output">Output</a><a href="#working-with-controls">Working with controls</a><a href="#using-lumen-on-an-insert-or-a-send">Using Lumen on an insert or a send</a><a href="#preset-categories">Preset categories</a><a href="#licence-and-trial">Licence and trial</a><a href="#support">Support</a></nav><main>
+<img class="shot" src="../../img/lumen.jpg" alt="Lumen plugin window">
+<h1>Lumen User Guide</h1>
+<p>Lumen is a reverb, delay and granular shimmer processor by Raz Burg AudioCrafts. Three engines can run alone or together, in series or in parallel, with a global Coloration stage on the output.</p>
+<h2 id="quick-start">Quick start</h2>
+<ul>
+<li><b>Lumen opens fully dry:</b> every engine is off and Coloration sits at Neutral. You hear your track unchanged.</li>
+<li>Switch an engine on with the round power button at the top right of its column.</li>
+<li>Pick a starting point from the preset menu in the toolbar, then adjust to taste.</li>
+<li>Use Mix to blend the effect with the dry signal. On a send/aux track set Mix to 100%.</li>
+<li>Undo and Redo step back and forward through your last 100 changes. Reset returns every control to its default (fully dry).</li>
+</ul>
+<h2 id="toolbar">Toolbar</h2>
+<ul>
+<li><b>Preset menu:</b> click the preset name to browse the factory presets by category. The arrows step to the previous or next preset.</li>
+<li><b>Undo / Redo:</b> each finished move of a control, switch or menu is one step. Loading a preset or pressing Reset is also one step, so it can be undone.</li>
+<li><b>Reset:</b> returns the whole plugin to its initial state (all engines off, Coloration neutral).</li>
+<li><b>? :</b> opens this guide.</li>
+</ul>
+<h2 id="header">Header</h2>
+<ul>
+<li>Signal Flow chooses how the engines are connected:</li>
+<li><b>Serial:</b> Delay feeds Shimmer, which feeds Reverb. Echoes are smeared into the space.</li>
+<li><b>Parallel:</b> each engine hears the dry signal on its own, and their outputs are summed. Clearer and more defined.</li>
+<li><b>Reverb › Delay:</b> the reverb comes first and the delay repeats the reverb tail. Good for big ambient throws.</li>
+<li><b>Licence badge:</b> shows the trial or licence state and opens the activation panel.</li>
+<li><b>Advanced:</b> shows every parameter of each engine, below its main knobs.</li>
+</ul>
+<h2 id="display">Display</h2>
+<p>The display shows one time line with the dry hit, the delay repeats, the shimmer grains and the reverb envelope, each in its engine&#x27;s colour. It follows every knob move immediately.</p>
+<h2 id="delay">Delay</h2>
+<p>A tempo-synced stereo delay with analog, tape and lo-fi characters.</p>
+<ul>
+<li><b>Time:</b> delay time in milliseconds when Sync is off, or a note division (1/64 to 4/1, including dotted and triplet values) when Sync is on.</li>
+<li><b>Feedback:</b> how many repeats. Above 100% the repeats grow and saturate, for runaway dub effects.</li>
+<li><b>Tone:</b> high-cut on the repeats. Lower values give darker, softer echoes.</li>
+<li><b>Level:</b> output level of the delay.</li>
+<li><b>Mode:</b> Stereo, Ping-Pong (repeats bounce left and right), Dual (independent left and right lines) or Wide (the right side is offset by a few milliseconds for extra width).</li>
+<li><b>Character:</b> Clean (digital), Analog (warm, slightly saturated), Tape (wow, flutter and tape saturation) or Lo-Fi (band-limited and gritty).</li>
+<li><b>Sync:</b> locks the time to the host tempo.</li>
+<li><b>Freeze:</b> holds the current repeats forever and ignores new input. Turn it off to release them.</li>
+<li><b>Advanced:</b> Low-Cut (thins the repeats), Drive (saturation inside the feedback loop), Ducking (lowers the repeats while you play, so they bloom in the gaps), Mod Rate and Mod Depth (pitch movement of the repeats).</li>
+</ul>
+<h2 id="shimmer">Shimmer</h2>
+<p>A granular pitch shifter in a feedback loop, for octave-up halos and evolving textures.</p>
+<ul>
+<li><b>Pitch A and Pitch B:</b> two grain voices, each shifted from -24 to +24 semitones. +12 is an octave up, +7 a fifth.</li>
+<li><b>Feedback:</b> feeds the shifted grains back into the shifter, so each pass climbs or falls again.</li>
+<li><b>Level:</b> output level of the shimmer.</li>
+<li><b>Reverse:</b> Off, On (grains play backwards) or Random.</li>
+<li><b>Advanced:</b> Grain (length of each grain, short is glassy and long is smooth), Density (how many grains overlap), Spray (random timing of the grains).</li>
+<li><b>Tip:</b> in Serial routing the shimmer feeds the reverb, which turns the grains into a smooth wash.</li>
+</ul>
+<h2 id="reverb">Reverb</h2>
+<p>An algorithmic reverb: six types of space, each available in five eras.</p>
+<ul>
+<li><b>Decay:</b> how long the tail lasts (RT60), from 0.2 to 20 seconds.</li>
+<li><b>Size:</b> the size of the space. Larger sizes spread the early reflections and slow the build-up. Changing Size never bends the pitch: Lumen starts the new space and lets the previous tail ring out.</li>
+<li><b>Pre-Delay:</b> time before the reverb starts. 20 to 80 ms keeps vocals and drums clear in front of the space.</li>
+<li><b>Level:</b> output level of the reverb.</li>
+<li><b>Mode:</b> the type of space. Hall, Plate, Room, Chamber, Bloom (slow swell) or Cloud (dense, diffuse wash).</li>
+<li><b>Era:</b> voices the chosen mode after the studio reverbs of each decade, listed from oldest to newest. Every era works with every mode, and the eras are level-matched, so switching changes the colour, not the volume.</li>
+<li><b>60s:</b> a console send into tape and a physical space. Band-limited (thin lows, no air), gently saturated and mid-forward, with no movement. Chamber becomes a tiled echo chamber fed by a tape delay, a speaker and a microphone pair, and Room becomes a small chamber with hard, reflective walls.</li>
+<li><b>70s:</b> analog plates and the first digital units. Dark and soft on top, grainy, with sparser diffusion and slow movement.</li>
+<li><b>80s:</b> the classic digital halls. Bright but band-limited, with the grit of 12-bit, reduced-rate converters and a strong chorus-like movement.</li>
+<li><b>90s:</b> later digital halls. Smooth random movement on every line, lush diffusion, a long bass decay and the brightest, most open top end of all the eras. Hall and Cloud switch to a dedicated random-hall algorithm (Cloud with a slower, concert-hall voice).</li>
+<li><b>Now:</b> clean, full range and transparent, with gentle movement.</li>
+<li><b>Advanced:</b> Diffusion (how quickly echoes blur into a tail), Mod Rate and Mod Depth (movement that avoids metallic ringing), Low-Cut and High-Cut (shape the tail), Width (from mono to full stereo).</li>
+</ul>
+<h2 id="output">Output</h2>
+<ul>
+<li><b>Mix:</b> balance between dry and processed sound. With every engine off Lumen stays fully dry whatever Mix is set to.</li>
+<li><b>Cross-Feed:</b> sends the end of the chain back to its start, so the engines feed each other. Use small amounts for richer, longer tails.</li>
+<li><b>Coloration:</b> a global tone stage after everything else. Shine (right) adds bright 2nd and 3rd harmonics to the upper frequencies and a gentle presence lift. Dark (left) adds warm low-order harmonics to the low mids and softens the top. Neutral (centre) is an exact bypass. Double-click to return to Neutral.</li>
+<li><b>Output:</b> final output level.</li>
+</ul>
+<h2 id="working-with-controls">Working with controls</h2>
+<ul>
+<li>Drag up/down or left/right to turn a knob. Hold Cmd (Mac) or Ctrl (Windows) while dragging for fine control.</li>
+<li>Double-click a knob to return it to its default value.</li>
+<li>Hover over a control to see a short description.</li>
+<li>The window can be resized from the bottom-right corner. Everything scales and stays sharp.</li>
+</ul>
+<h2 id="using-lumen-on-an-insert-or-a-send">Using Lumen on an insert or a send</h2>
+<ul>
+<li><b>Insert:</b> put Lumen directly on a track and set Mix to taste, usually 10 to 35%.</li>
+<li><b>Send/aux:</b> put Lumen on an aux or FX track, set Mix to 100%, and send to it from several tracks. The presets in the Send category are set up this way.</li>
+<li>Keep Pre-Delay above 20 ms and use Low-Cut on the reverb to keep the mix clear.</li>
+</ul>
+<h2 id="preset-categories">Preset categories</h2>
+<ul>
+<li><b>Vocals:</b> plates, halls, slapback and throws for lead and background vocals.</li>
+<li><b>Drums:</b> snare plates, drum rooms and big 80s snares.</li>
+<li><b>Guitars:</b> echoes, swells, rooms and doublers.</li>
+<li><b>Keys &amp; Piano:</b> halls and rooms for piano, Rhodes and organ.</li>
+<li><b>Synths &amp; Pads:</b> shimmer pads, lush halls and rhythmic echoes.</li>
+<li><b>Strings &amp; Orchestral:</b> scoring stages and concert halls.</li>
+<li><b>Ambient &amp; FX:</b> freezes, reverse grains and runaway feedback.</li>
+<li><b>Vintage:</b> the 60s, 70s, 80s and 90s studio sounds.</li>
+<li><b>Send (100% Wet):</b> ready-made aux returns.</li>
+</ul>
+<h2 id="licence-and-trial">Licence and trial</h2>
+<ul>
+<li>Lumen runs fully for a 14-day trial. After that, enter the licence key from your purchase email in the activation panel.</li>
+<li>A licence activates one computer. To move Lumen to another computer, open the licence badge and choose Deactivate first.</li>
+<li>Lumen checks the licence online now and then, and keeps working offline in between.</li>
+</ul>
+<h2 id="support">Support</h2>
+<p>Visit audiocrafts.razburg.com for updates and support.</p>
+</main></div></body></html>
