@@ -1,7 +1,10 @@
 // Gate for /files/<product_slug>/<file>: only signed-in users who added that
 // product in My plugins can download. The account page sets a short-lived
 // "rba_at" cookie (Supabase access token, Path=/files) right before the download.
-import { SUPABASE_URL, SUPABASE_ANON_KEY } from "./site-config.js";
+// Same public values as js/config.js (publishable key is public; RLS enforces access).
+// Keep this file self-contained: every file in this folder is deployed as a function.
+const SUPABASE_URL = "https://cmolzvodpvktkjgrfrtt.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_2AvUWy3rpblb4qEOgNutVw_4Gfx197l";
 
 export default async (request, context) => {
   const url = new URL(request.url);
