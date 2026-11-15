@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My plugins · Raz Burg AudioCrafts</title>
+<meta name="description" content="Sign in to Raz Burg AudioCrafts to get your free plugins, iLok activation codes and installers.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="../img/logo.svg">
+<style>
+:root{--bg:#11161D;--surface:#19212B;--raised:#202A36;--line:#2B3542;--text:#F2F5F9;--muted:#97A3B2;--faint:#5A6676;--display:#0C1016;--top:#1A4FC4;--bottom:#11287A;--blue:#6F9CFF;--cyan:#8DDCFF;--amber:#FFB45E;--green:#5EE0A0;--red:#FF7A7A}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font:16px/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Inter,Roboto,sans-serif;background-image:radial-gradient(ellipse 900px 520px at 50% -120px,rgba(26,79,196,.32),transparent 70%);background-repeat:no-repeat;min-height:100vh}
+a{color:var(--cyan);text-decoration:none}a:hover{text-decoration:underline}
+.wrap{max-width:1000px;margin:0 auto;padding:0 20px 80px}
+header{display:flex;align-items:center;justify-content:space-between;padding:22px 0;gap:16px}
+.brand{display:flex;align-items:center;gap:12px;color:var(--text)}.brand:hover{text-decoration:none}
+.brand img{width:36px;height:36px}
+.brand .name{font-size:13px;letter-spacing:.32em;text-transform:uppercase;line-height:1.3}
+.brand .name b{display:block;font-size:9.5px;letter-spacing:.22em;color:var(--cyan);opacity:.85}
+.who{display:flex;align-items:center;gap:14px;font-size:14px;color:var(--muted);min-width:0}
+.who span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.caps{font-weight:700;text-transform:uppercase;letter-spacing:.22em;font-size:11px}
+h1{font-size:clamp(28px,5vw,40px);font-weight:300;letter-spacing:.02em;margin:30px 0 8px}
+.lead{color:var(--muted);max-width:620px;margin-bottom:30px}
+.card{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent,var(--cyan)),transparent)}
+.btn{display:inline-block;border:0;cursor:pointer;padding:12px 24px;border-radius:999px;font:700 12px/1 inherit;font-family:inherit;letter-spacing:.18em;text-transform:uppercase;color:var(--text);transition:.2s;text-align:center}
+.btn:hover{text-decoration:none;filter:brightness(1.15)}
+.btn.primary{background:linear-gradient(180deg,var(--top),var(--bottom));box-shadow:0 6px 20px rgba(26,79,196,.35)}
+.btn.ghost{background:var(--raised);border:1px solid var(--line)}
+.btn.small{padding:8px 14px;font-size:10.5px}
+.btn:disabled{opacity:.5;cursor:default;filter:none}
+.linkbtn{background:none;border:0;color:var(--cyan);font:inherit;cursor:pointer;padding:0}
+.linkbtn:hover{text-decoration:underline}
+/* auth */
+.auth{max-width:420px;margin:30px auto 0;padding:34px 30px}
+.tabs{display:flex;background:var(--display);border:1px solid var(--line);border-radius:999px;padding:4px;margin-bottom:24px}
+.tabs button{flex:1;background:none;border:0;color:var(--muted);font:700 11px/1 inherit;font-family:inherit;letter-spacing:.18em;text-transform:uppercase;padding:11px 0;border-radius:999px;cursor:pointer}
+.tabs button.on{background:var(--raised);color:var(--text)}
+label{display:block;font-size:13px;color:var(--muted);margin:14px 0 6px}
+input[type=email],input[type=password],input[type=text]{width:100%;background:var(--display);border:1px solid var(--line);border-radius:10px;padding:12px 14px;color:var(--text);font:inherit;font-size:15px}
+input:focus{outline:none;border-color:var(--blue)}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);margin:16px 0 4px}
+.check input{margin-top:4px;accent-color:var(--blue)}
+.auth .btn{width:100%;margin-top:22px}
+.aux{display:flex;justify-content:space-between;margin-top:16px;font-size:13px}
+.msg{font-size:14px;border-radius:10px;padding:12px 14px;margin-top:16px;display:none}
+.msg.show{display:block}
+.msg.ok{background:rgba(94,224,160,.08);border:1px solid rgba(94,224,160,.35);color:var(--green)}
+.msg.err{background:rgba(255,122,122,.08);border:1px solid rgba(255,122,122,.35);color:var(--red)}
+.note{font-size:13px;color:var(--faint);margin-top:18px;text-align:center}
+/* dashboard */
+.grid{display:grid;gap:22px}
+.prod{padding:26px 28px;display:grid;grid-template-columns:1fr auto;gap:10px 24px;align-items:start}
+.prod .pname{font-size:24px;font-weight:300;letter-spacing:.32em;text-transform:uppercase}
+.prod .ptype{color:var(--accent,var(--cyan));margin-top:4px}
+.prod .side{text-align:right}
+.status{display:inline-block;padding:6px 12px;border-radius:999px;font-size:10.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;border:1px solid var(--line);color:var(--muted)}
+.status.on{border-color:rgba(94,224,160,.5);color:var(--green);background:rgba(94,224,160,.07)}
+.body{grid-column:1/-1;border-top:1px solid var(--line);margin-top:14px;padding-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.body h3{font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.code{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.code code{font:600 16px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:var(--display);border:1px solid var(--line);border-radius:10px;padding:10px 14px;letter-spacing:.06em;color:var(--cyan);word-break:break-all}
+.steps{font-size:13.5px;color:var(--muted);margin:12px 0 0 18px}
+.steps li{margin:3px 0}
+.pending{font-size:14px;color:var(--amber)}
+.dls{display:grid;gap:10px}
+.dl{display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--display);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.dl .meta{font-size:13px;color:var(--muted);line-height:1.4}
+.dl .meta b{color:var(--text);font-weight:600;display:block;font-size:14px}
+.empty{font-size:14px;color:var(--muted)}
+.danger{margin-top:50px;font-size:13px;color:var(--faint);text-align:center}
+.confirm{display:none;max-width:420px;margin:14px auto 0;padding:18px;text-align:left}
+.confirm.show{display:block}
+.confirm p{font-size:14px;color:var(--muted);margin-bottom:12px}
+.btn.red{background:rgba(255,122,122,.14);border:1px solid rgba(255,122,122,.5);color:var(--red)}
+.hidden{display:none!important}
+@media (max-width:720px){.prod{grid-template-columns:1fr}.prod .side{text-align:left}.body{grid-template-columns:1fr}.who span{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<a class="brand" href="../"><img src="../img/logo.svg" alt=""><div class="name">Raz Burg<b>AudioCrafts</b></div></a>
+<div class="who hidden" id="who"><span id="who-email"></span><button class="btn ghost small" id="signout">Sign out</button></div>
+</header>
+
+<!-- Accounts not configured yet -->
+<section id="v-soon" class="hidden">
+<h1>Accounts are opening soon</h1>
+<p class="lead">Soon you will be able to create a free account here, add any Raz Burg AudioCrafts plugin to your library and download the installers. Convert is already free to download from the <a href="../#convert">home page</a>.</p>
+</section>
+
+<!-- Signed out -->
+<section id="v-auth" class="hidden">
+<h1 style="text-align:center">All plugins. Free.</h1>
+<p class="lead" style="margin:0 auto;text-align:center">Create a free account to add plugins to your library, get your iLok activation codes and download the installers for Mac and Windows.</p>
+<div class="card auth">
+<div class="tabs" role="tablist"><button class="on" data-tab="signup" role="tab">Create account</button><button data-tab="signin" role="tab">Sign in</button></div>
+<form id="f-auth" novalidate>
+<label for="email">Email</label>
+<input id="email" type="email" autocomplete="email" required>
+<label for="password">Password</label>
+<input id="password" type="password" autocomplete="new-password" minlength="8" required>
+<div class="check" id="terms-row"><input type="checkbox" id="terms"><label for="terms" style="margin:0">I agree to the <a href="../privacy/" target="_blank">privacy policy</a>.</label></div>
+<button class="btn primary" type="submit" id="auth-submit">Create free account</button>
+<div class="aux"><button type="button" class="linkbtn hidden" id="to-forgot">Forgot password?</button><span></span></div>
+<div class="msg" id="auth-msg"></div>
+</form>
+<p class="note">Each plugin comes with an iLok licence for up to two computers.</p>
+</div>
+</section>
+
+<!-- Forgot password -->
+<section id="v-forgot" class="hidden">
+<div class="card auth">
+<h2 style="font-weight:300;font-size:24px;margin-bottom:6px">Reset your password</h2>
+<p style="color:var(--muted);font-size:14px">We will email you a link to choose a new password.</p>
+<form id="f-forgot" novalidate>
+<label for="f-email">Email</label>
+<input id="f-email" type="email" autocomplete="email" required>
+<button class="btn primary" type="submit">Send reset link</button>
+<div class="aux"><button type="button" class="linkbtn" id="back-signin">Back to sign in</button><span></span></div>
+<div class="msg" id="forgot-msg"></div>
+</form>
+</div>
+</section>
+
+<!-- Choose new password (from email link) -->
+<section id="v-reset" class="hidden">
+<div class="card auth">
+<h2 style="font-weight:300;font-size:24px;margin-bottom:6px">Choose a new password</h2>
+<form id="f-reset" novalidate>
+<label for="r-password">New password</label>
+<input id="r-password" type="password" autocomplete="new-password" minlength="8" required>
+<button class="btn primary" type="submit">Save password</button>
+<div class="msg" id="reset-msg"></div>
+</form>
+</div>
+</section>
+
+<!-- Signed in -->
+<section id="v-dash" class="hidden">
+<h1>My plugins</h1>
+<p class="lead">Every plugin is free. Add one to your library to get its iLok activation code and installers. Each code activates the plugin on up to two computers.</p>
+<div class="msg" id="dash-msg" style="margin-bottom:20px"></div>
+<div class="grid" id="products"></div>
+<div class="danger"><button class="linkbtn" id="to-delete" style="color:var(--faint)">Delete my account</button></div>
+<div class="card confirm" id="confirm">
+<p>This permanently deletes your account and your plugin library. Plugins you already activated keep working in iLok. Type <b>DELETE</b> to confirm.</p>
+<input type="text" id="confirm-text" autocomplete="off">
+<div style="display:flex;gap:10px;margin-top:12px"><button class="btn red small" id="do-delete" disabled>Delete account</button><button class="btn ghost small" id="cancel-delete">Cancel</button></div>
+</div>
+</section>
+</div>
+
+<script src="../js/config.js"></script>
+<script src="../js/vendor/supabase-2.45.4.js"></script>
+<script>
+(function () {
+  "use strict";
+  var cfg = window.RBA_CONFIG || {};
+  var $ = function (id) { return document.getElementById(id); };
+  var views = ["v-soon", "v-auth", "v-forgot", "v-reset", "v-dash"];
+  function show(v) { views.forEach(function (x) { $(x).classList.toggle("hidden", x !== v); }); }
+  function msg(el, text, ok) { el.textContent = text; el.className = "msg show " + (ok ? "ok" : "err"); }
+  function clearMsg(el) { el.className = "msg"; el.textContent = ""; }
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function mb(n) { return n ? (n / 1048576).toFixed(0) + " MB" : ""; }
+  var ACCENT = { lumen: "var(--cyan)", chroma: "var(--amber)", convert: "var(--blue)" };
+
+  if (!cfg.supabaseUrl || !cfg.supabaseAnonKey || !window.supabase) { show("v-soon"); return; }
+
+  var sb = window.supabase.createClient(cfg.supabaseUrl, cfg.supabaseAnonKey, {
+    auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
+  });
+  var here = location.origin + location.pathname;
+
+  // Remember which plugin the visitor wanted (from "Get it free" on the home page).
+  var m = location.hash.match(/claim=([a-z0-9-]+)/);
+  if (m) { try { sessionStorage.setItem("rba-claim", m[1]); } catch (e) {} history.replaceState(null, "", location.pathname); }
+  function pendingClaim() { try { return sessionStorage.getItem("rba-claim"); } catch (e) { return null; } }
+  function clearClaim() { try { sessionStorage.removeItem("rba-claim"); } catch (e) {} }
+
+  // ── Auth forms ──
+  var mode = "signup";
+  function setMode(m2) {
+    mode = m2;
+    document.querySelectorAll(".tabs button").forEach(function (b) { b.classList.toggle("on", b.dataset.tab === m2); });
+    $("terms-row").classList.toggle("hidden", m2 !== "signup");
+    $("to-forgot").classList.toggle("hidden", m2 !== "signin");
+    $("auth-submit").textContent = m2 === "signup" ? "Create free account" : "Sign in";
+    $("password").setAttribute("autocomplete", m2 === "signup" ? "new-password" : "current-password");
+    clearMsg($("auth-msg"));
+  }
+  document.querySelectorAll(".tabs button").forEach(function (b) { b.addEventListener("click", function () { setMode(b.dataset.tab); }); });
+  $("to-forgot").addEventListener("click", function () { $("f-email").value = $("email").value; show("v-forgot"); });
+  $("back-signin").addEventListener("click", function () { setMode("signin"); show("v-auth"); });
+
+  $("f-auth").addEventListener("submit", async function (e) {
+    e.preventDefault();
+    var email = $("email").value.trim(), pw = $("password").value, out = $("auth-msg"), btn = $("auth-submit");
+    if (!/^\S+@\S+\.\S+$/.test(email)) return msg(out, "Please enter a valid email address.");
+    if (pw.length < 8) return msg(out, "Your password needs at least 8 characters.");
+    if (mode === "signup" && !$("terms").checked) return msg(out, "Please agree to the privacy policy to continue.");
+    btn.disabled = true;
+    try {
+      if (mode === "signup") {
+        var r = await sb.auth.signUp({ email: email, password: pw, options: { emailRedirectTo: here } });
+        if (r.error) throw r.error;
+        if (!r.data.session) msg(out, "Almost there. We sent a confirmation link to " + email + ". Open it to activate your account.", true);
+      } else {
+        var r2 = await sb.auth.signInWithPassword({ email: email, password: pw });
+        if (r2.error) throw r2.error;
+      }
+    } catch (err) {
+      var t = (err && err.message) || "Something went wrong. Please try again.";
+      if (/invalid login/i.test(t)) t = "Wrong email or password.";
+      if (/not confirmed/i.test(t)) t = "Please confirm your email first. Check your inbox for the link.";
+      if (/already registered/i.test(t)) t = "This email already has an account. Sign in instead.";
+      msg(out, t);
+    } finally { btn.disabled = false; }
+  });
+
+  $("f-forgot").addEventListener("submit", async function (e) {
+    e.preventDefault();
+    var email = $("f-email").value.trim(), out = $("forgot-msg");
+    if (!/^\S+@\S+\.\S+$/.test(email)) return msg(out, "Please enter a valid email address.");
+    var r = await sb.auth.resetPasswordForEmail(email, { redirectTo: here });
+    if (r.error) return msg(out, r.error.message);
+    msg(out, "If an account exists for " + email + ", a reset link is on its way.", true);
+  });
+
+  $("f-reset").addEventListener("submit", async function (e) {
+    e.preventDefault();
+    var pw = $("r-password").value, out = $("reset-msg");
+    if (pw.length < 8) return msg(out, "Your password needs at least 8 characters.");
+    var r = await sb.auth.updateUser({ password: pw });
+    if (r.error) return msg(out, r.error.message);
+    msg(out, "Password saved.", true);
+    setTimeout(function () { render(); }, 900);
+  });
+
+  $("signout").addEventListener("click", async function () { await sb.auth.signOut(); });
+
+  // ── Delete account ──
+  $("to-delete").addEventListener("click", function () { $("confirm").classList.add("show"); $("confirm-text").focus(); });
+  $("cancel-delete").addEventListener("click", function () { $("confirm").classList.remove("show"); $("confirm-text").value = ""; $("do-delete").disabled = true; });
+  $("confirm-text").addEventListener("input", function () { $("do-delete").disabled = this.value.trim() !== "DELETE"; });
+  $("do-delete").addEventListener("click", async function () {
+    this.disabled = true;
+    var r = await sb.rpc("delete_my_account");
+    if (r.error) { msg($("dash-msg"), "Could not delete the account: " + r.error.message); return; }
+    await sb.auth.signOut();
+  });
+
+  // ── Dashboard ──
+  async function loadDashboard(session) {
+    $("who-email").textContent = session.user.email;
+    $("who").classList.remove("hidden");
+    show("v-dash");
+    var want = pendingClaim();
+    if (want) { clearClaim(); await sb.rpc("claim_plugin", { p_slug: want }); }
+
+    var res = await Promise.all([
+      sb.from("products").select("*").eq("available", true).order("sort"),
+      sb.from("downloads").select("*").eq("published", true).order("platform"),
+      sb.rpc("my_plugins")
+    ]);
+    var err = res[0].error || res[1].error || res[2].error;
+    if (err) { msg($("dash-msg"), "We could not load your plugins. Please refresh the page. (" + err.message + ")"); return; }
+    var mine = {}; (res[2].data || []).forEach(function (c) { mine[c.product_slug] = c; });
+    var dls = res[1].data || [];
+    var wrap = $("products"); wrap.innerHTML = "";
+
+    res[0].data.forEach(function (p) {
+      var owned = !p.needs_ilok || !!mine[p.slug];
+      var card = document.createElement("div");
+      card.className = "card prod"; card.id = "p-" + p.slug;
+      card.style.setProperty("--accent", ACCENT[p.slug] || "var(--cyan)");
+      var side = !p.needs_ilok ? '<span class="status on">Free app</span>'
+        : owned ? '<span class="status on">In your library</span>'
+        : '<button class="btn primary small" data-claim="' + esc(p.slug) + '">Add to my plugins · Free</button>';
+      var html = '<div><div class="pname">' + esc(p.name) + '</div><div class="caps ptype">' + esc(p.tagline) + '</div></div><div class="side">' + side + '</div>';
+      if (owned) {
+        var lic = "";
+        if (p.needs_ilok) {
+          var c = mine[p.slug];
+          lic = '<div><h3>iLok activation code</h3>' + (c.license_code
+            ? '<div class="code"><code>' + esc(c.license_code) + '</code><button class="btn ghost small" data-copy="' + esc(c.license_code) + '">Copy</button></div>' +
+              '<ol class="steps"><li>Install <a href="https://www.ilok.com/#!license-manager" target="_blank" rel="noopener">iLok License Manager</a> and sign in with your free iLok account.</li><li>Choose Licenses › Redeem an Activation Code and paste the code.</li><li>Activate ' + esc(p.name) + ' on up to two computers or iLok keys.</li></ol>'
+            : '<p class="pending">Your activation code is being prepared. It will appear here as soon as it is ready, so check back soon.</p>') + '</div>';
+        } else {
+          lic = '<div><h3>Licence</h3><p class="empty">No account, licence or iLok needed. Just download and run.</p></div>';
+        }
+        var mineDl = dls.filter(function (d) { return d.product_slug === p.slug; });
+        var dlHtml = '<div><h3>Downloads</h3>' + (mineDl.length ? '<div class="dls">' + mineDl.map(function (d) {
+          return '<div class="dl"><div class="meta"><b>' + (d.platform === "mac" ? "Mac" : "Windows") + ' · ' + esc(d.formats) + '</b>v' + esc(d.version) + (d.min_os ? ' · ' + esc(d.min_os) : '') + (d.size_bytes ? ' · ' + mb(d.size_bytes) : '') + '</div>' +
+            '<button class="btn primary small" data-dl="' + d.id + '">Download</button></div>';
+        }).join("") + '</div>' : '<p class="empty">Installers are coming soon. We will add them here as soon as they are signed and ready.</p>') + '</div>';
+        html += '<div class="body">' + lic + dlHtml + '</div>';
+      }
+      card.innerHTML = html;
+      wrap.appendChild(card);
+    });
+
+    wrap.querySelectorAll("[data-claim]").forEach(function (b) {
+      b.addEventListener("click", async function () {
+        b.disabled = true;
+        var r = await sb.rpc("claim_plugin", { p_slug: b.dataset.claim });
+        if (r.error) { b.disabled = false; msg($("dash-msg"), "Could not add the plugin: " + r.error.message); return; }
+        await loadDashboard(session);
+        var el = $("p-" + b.dataset.claim); if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+    });
+    wrap.querySelectorAll("[data-copy]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        navigator.clipboard.writeText(b.dataset.copy).then(function () { b.textContent = "Copied"; setTimeout(function () { b.textContent = "Copy"; }, 1500); });
+      });
+    });
+    wrap.querySelectorAll("[data-dl]").forEach(function (b) {
+      b.addEventListener("click", async function () {
+        var d = dls.filter(function (x) { return String(x.id) === b.dataset.dl; })[0];
+        if (!d) return;
+        if (d.public_url) { location.href = d.public_url; return; }
+        b.disabled = true;
+        var r = await sb.storage.from("installers").createSignedUrl(d.storage_path, 300, { download: true });
+        b.disabled = false;
+        if (r.error) { msg($("dash-msg"), "Download failed: " + r.error.message); return; }
+        location.href = r.data.signedUrl;
+      });
+    });
+  }
+
+  var recovering = false, shownFor = null;
+  async function render(session) {
+    if (session === undefined) session = (await sb.auth.getSession()).data.session;
+    if (recovering) { show("v-reset"); return; }
+    if (session) {
+      if (shownFor === session.user.id && !$("v-dash").classList.contains("hidden")) return;
+      shownFor = session.user.id;
+      loadDashboard(session);
+    } else { shownFor = null; $("who").classList.add("hidden"); show("v-auth"); }
+  }
+
+  sb.auth.onAuthStateChange(function (event, session) {
+    if (event === "PASSWORD_RECOVERY") { recovering = true; show("v-reset"); return; }
+    if (event === "USER_UPDATED" && recovering) { recovering = false; }
+    if (event === "SIGNED_IN" || event === "SIGNED_OUT" || event === "INITIAL_SESSION") setTimeout(function () { render(session); }, 0);
+  });
+  if (pendingClaim()) setMode("signup");
+})();
+</script>
+</body>
+</html>
