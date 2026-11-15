@@ -54,5 +54,11 @@ values ('lumen', 'mac', 'AAX · VST3 · AU', '0.4.0', 'macOS 11+', 'lumen/Lumen-
 ```
 
 Only signed-in users who added that plugin can create a 5-minute download
-link. Convert stays a public download (`/download/convert-*`), no account.
-Free-tier storage allows files up to 50 MB.
+link. Free-tier storage allows files up to 50 MB.
+
+Larger files (Convert) are served from the site itself under `/files/<slug>/`,
+guarded by the Netlify edge function `netlify/edge-functions/gate.js`: it lets
+the request through only if the short-lived `rba_at` cookie belongs to a user
+who added that product. Add a `downloads` row with `public_url = '/files/<slug>/<file>'`.
+Note: the GitHub repo is public, so files committed here are also visible on
+GitHub; make the repo private to close that.

@@ -8,7 +8,7 @@ create table if not exists public.products (
   slug        text primary key,
   name        text not null,
   tagline     text,
-  needs_ilok  boolean not null default true,   -- false = free app, public download, no account needed
+  needs_ilok  boolean not null default true,   -- false = free app, no licence (still needs an account to download)
   available   boolean not null default true,   -- false hides it from My plugins
   sort        int not null default 0
 );
@@ -21,7 +21,8 @@ create table if not exists public.downloads (
   version       text not null,
   min_os        text,                          -- e.g. 'macOS 11+ · Apple Silicon & Intel'
   storage_path  text,                          -- path in the private 'installers' bucket: '<product_slug>/<file>'
-  public_url    text,                          -- for public downloads (Convert)
+  public_url    text,                          -- site path served through the /files/* gate, e.g. '/files/convert/x.dmg'
+  note          text,                          -- short note shown under the download
   size_bytes    bigint,
   published     boolean not null default true,
   created_at    timestamptz not null default now(),
@@ -37,6 +38,7 @@ create table if not exists public.license_codes (
   assigned_at   timestamptz,
   created_at    timestamptz not null default now()
 );
+alter table public.downloads add column if not exists note text;
 alter table public.license_codes drop constraint if exists license_codes_assigned_to_fkey;
 create index if not exists license_codes_free_idx
   on public.license_codes (product_slug, id) where assigned_to is null;
@@ -78,7 +80,7 @@ language plpgsql security definer set search_path = public
 as $$
 begin
   if auth.uid() is null then raise exception 'not_signed_in'; end if;
-  if not exists (select 1 from products where slug = p_slug and available and needs_ilok) then
+  if not exists (select 1 from products where slug = p_slug and available) then
     raise exception 'unknown_product';
   end if;
   insert into claims (user_id, product_slug) values (auth.uid(), p_slug)
@@ -170,9 +172,9 @@ on conflict (slug) do update
   set name = excluded.name, tagline = excluded.tagline,
       needs_ilok = excluded.needs_ilok, sort = excluded.sort;
 
-insert into public.downloads (product_slug, platform, formats, version, min_os, public_url, size_bytes)
+insert into public.downloads (product_slug, platform, formats, version, min_os, public_url, size_bytes, note)
 select * from (values
-  ('convert', 'mac',     'App', '0.1.0', 'macOS 11+ · Apple Silicon', '/download/convert-mac',     26036048::bigint),
-  ('convert', 'windows', 'App', '0.1.0', 'Windows 10/11 · x64',       '/download/convert-windows', 88489556::bigint)
-) v(product_slug, platform, formats, version, min_os, public_url, size_bytes)
+  ('convert', 'mac',     'App', '0.1.0', 'macOS 11+ · Apple Silicon', '/files/convert/Convert_0.1.0_aarch64.dmg',   26036048::bigint, 'Signed and notarized by Apple.'),
+  ('convert', 'windows', 'App', '0.1.0', 'Windows 10/11 · x64',       '/files/convert/Convert_0.1.0_x64-setup.exe', 88489556::bigint, 'If Windows warns on first launch, click More info, then Run anyway.')
+) v(product_slug, platform, formats, version, min_os, public_url, size_bytes, note)
 where not exists (select 1 from public.downloads d where d.product_slug = 'convert');
