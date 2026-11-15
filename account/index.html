@@ -89,7 +89,7 @@ input:focus{outline:none;border-color:var(--blue)}
 <!-- Accounts not configured yet -->
 <section id="v-soon" class="hidden">
 <h1>Accounts are opening soon</h1>
-<p class="lead">Soon you will be able to create a free account here, add any Raz Burg AudioCrafts plugin to your library and download the installers. Convert is already free to download from the <a href="../#convert">home page</a>.</p>
+<p class="lead">Soon you will be able to create a free account here, add any Raz Burg AudioCrafts plugin to your library and download the installers. Lumen, Chroma and Convert will all be free.</p>
 </section>
 
 <!-- Signed out -->
@@ -103,7 +103,7 @@ input:focus{outline:none;border-color:var(--blue)}
 <input id="email" type="email" autocomplete="email" required>
 <label for="password">Password</label>
 <input id="password" type="password" autocomplete="new-password" minlength="8" required>
-<div class="check" id="terms-row"><input type="checkbox" id="terms"><label for="terms" style="margin:0">I agree to the <a href="../privacy/" target="_blank">privacy policy</a>.</label></div>
+<div class="check" id="terms-row"><input type="checkbox" id="terms"><label for="terms" style="margin:0">I agree to the <a href="../terms/" target="_blank">Terms of Use</a> and the <a href="../privacy/" target="_blank">Privacy Policy</a>.</label></div>
 <button class="btn primary" type="submit" id="auth-submit">Create free account</button>
 <div class="aux"><button type="button" class="linkbtn hidden" id="to-forgot">Forgot password?</button><span></span></div>
 <div class="msg" id="auth-msg"></div>
@@ -143,7 +143,7 @@ input:focus{outline:none;border-color:var(--blue)}
 <!-- Signed in -->
 <section id="v-dash" class="hidden">
 <h1>My plugins</h1>
-<p class="lead">Every plugin is free. Add one to your library to get its iLok activation code and installers. Each code activates the plugin on up to two computers.</p>
+<p class="lead">Everything is free. Add a plugin to your library to get its iLok activation code and installers. Each code activates the plugin on up to two computers.</p>
 <div class="msg" id="dash-msg" style="margin-bottom:20px"></div>
 <div class="grid" id="products"></div>
 <div class="danger"><button class="linkbtn" id="to-delete" style="color:var(--faint)">Delete my account</button></div>
@@ -156,7 +156,7 @@ input:focus{outline:none;border-color:var(--blue)}
 </div>
 
 <script src="../js/config.js"></script>
-<script src="../js/vendor/supabase-2.45.4.js"></script>
+<script src="../js/vendor/supabase-2.118.0.js"></script>
 <script>
 (function () {
   "use strict";
@@ -203,7 +203,7 @@ input:focus{outline:none;border-color:var(--blue)}
     var email = $("email").value.trim(), pw = $("password").value, out = $("auth-msg"), btn = $("auth-submit");
     if (!/^\S+@\S+\.\S+$/.test(email)) return msg(out, "Please enter a valid email address.");
     if (pw.length < 8) return msg(out, "Your password needs at least 8 characters.");
-    if (mode === "signup" && !$("terms").checked) return msg(out, "Please agree to the privacy policy to continue.");
+    if (mode === "signup" && !$("terms").checked) return msg(out, "Please agree to the Terms of Use and Privacy Policy to continue.");
     btn.disabled = true;
     try {
       if (mode === "signup") {
@@ -275,12 +275,11 @@ input:focus{outline:none;border-color:var(--blue)}
     var wrap = $("products"); wrap.innerHTML = "";
 
     res[0].data.forEach(function (p) {
-      var owned = !p.needs_ilok || !!mine[p.slug];
+      var owned = !!mine[p.slug];
       var card = document.createElement("div");
       card.className = "card prod"; card.id = "p-" + p.slug;
       card.style.setProperty("--accent", ACCENT[p.slug] || "var(--cyan)");
-      var side = !p.needs_ilok ? '<span class="status on">Free app</span>'
-        : owned ? '<span class="status on">In your library</span>'
+      var side = owned ? '<span class="status on">In your library</span>'
         : '<button class="btn primary small" data-claim="' + esc(p.slug) + '">Add to my plugins · Free</button>';
       var html = '<div><div class="pname">' + esc(p.name) + '</div><div class="caps ptype">' + esc(p.tagline) + '</div></div><div class="side">' + side + '</div>';
       if (owned) {
@@ -292,11 +291,11 @@ input:focus{outline:none;border-color:var(--blue)}
               '<ol class="steps"><li>Install <a href="https://www.ilok.com/#!license-manager" target="_blank" rel="noopener">iLok License Manager</a> and sign in with your free iLok account.</li><li>Choose Licenses › Redeem an Activation Code and paste the code.</li><li>Activate ' + esc(p.name) + ' on up to two computers or iLok keys.</li></ol>'
             : '<p class="pending">Your activation code is being prepared. It will appear here as soon as it is ready, so check back soon.</p>') + '</div>';
         } else {
-          lic = '<div><h3>Licence</h3><p class="empty">No account, licence or iLok needed. Just download and run.</p></div>';
+          lic = '<div><h3>Licence</h3><p class="empty">No licence or iLok needed. Just download and run.</p></div>';
         }
         var mineDl = dls.filter(function (d) { return d.product_slug === p.slug; });
         var dlHtml = '<div><h3>Downloads</h3>' + (mineDl.length ? '<div class="dls">' + mineDl.map(function (d) {
-          return '<div class="dl"><div class="meta"><b>' + (d.platform === "mac" ? "Mac" : "Windows") + ' · ' + esc(d.formats) + '</b>v' + esc(d.version) + (d.min_os ? ' · ' + esc(d.min_os) : '') + (d.size_bytes ? ' · ' + mb(d.size_bytes) : '') + '</div>' +
+          return '<div class="dl"><div class="meta"><b>' + (d.platform === "mac" ? "Mac" : "Windows") + ' · ' + esc(d.formats) + '</b>v' + esc(d.version) + (d.min_os ? ' · ' + esc(d.min_os) : '') + (d.size_bytes ? ' · ' + mb(d.size_bytes) : '') + (d.note ? '<br><span style="color:var(--faint)">' + esc(d.note) + '</span>' : '') + '</div>' +
             '<button class="btn primary small" data-dl="' + d.id + '">Download</button></div>';
         }).join("") + '</div>' : '<p class="empty">Installers are coming soon. We will add them here as soon as they are signed and ready.</p>') + '</div>';
         html += '<div class="body">' + lic + dlHtml + '</div>';
@@ -323,7 +322,12 @@ input:focus{outline:none;border-color:var(--blue)}
       b.addEventListener("click", async function () {
         var d = dls.filter(function (x) { return String(x.id) === b.dataset.dl; })[0];
         if (!d) return;
-        if (d.public_url) { location.href = d.public_url; return; }
+        if (d.public_url) {
+          // The /files/* gate checks this short-lived token cookie.
+          var t = (await sb.auth.getSession()).data.session;
+          if (t) document.cookie = "rba_at=" + encodeURIComponent(t.access_token) + "; Path=/files; Max-Age=600; Secure; SameSite=Lax";
+          location.href = d.public_url; return;
+        }
         b.disabled = true;
         var r = await sb.storage.from("installers").createSignedUrl(d.storage_path, 300, { download: true });
         b.disabled = false;
