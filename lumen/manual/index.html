@@ -22,7 +22,7 @@ main a{color:var(--cyan)}</style></head><body>
 <div class="wrap"><nav><a href="#quick-start">Quick start</a><a href="#toolbar">Toolbar</a><a href="#header">Header</a><a href="#display">Display</a><a href="#delay">Delay</a><a href="#shimmer">Shimmer</a><a href="#reverb">Reverb</a><a href="#output">Output</a><a href="#working-with-controls">Working with controls</a><a href="#using-lumen-on-an-insert-or-a-send">Using Lumen on an insert or a send</a><a href="#preset-categories">Preset categories</a><a href="#licence">Licence</a><a href="#support">Support</a></nav><main>
 <img class="shot" src="../../img/lumen.jpg" alt="Lumen plugin window">
 <h1>Lumen User Guide</h1>
-<p>Lumen is a reverb, delay and granular shimmer processor by Raz Burg AudioCrafts. Three engines can run alone or together, in series or in parallel, with a global Coloration stage on the output.</p>
+<p>Lumen is a reverb, delay and shimmer reverb processor by Raz Burg AudioCrafts. Three engines can run alone or together, in series or in parallel, with a global Coloration stage on the output.</p>
 <h2 id="quick-start">Quick start</h2>
 <ul>
 <li><b>Lumen opens fully dry:</b> every engine is off and Coloration sits at Neutral. You hear your track unchanged.</li>
@@ -41,13 +41,13 @@ main a{color:var(--cyan)}</style></head><body>
 <h2 id="header">Header</h2>
 <ul>
 <li>Signal Flow chooses how the engines are connected:</li>
-<li><b>Serial:</b> Delay feeds Shimmer, which feeds Reverb. Echoes are smeared into the space.</li>
+<li><b>Serial:</b> Delay feeds Shimmer, which feeds Reverb. Echoes are smeared into the space, and the shimmer gets an extra layer of room.</li>
 <li><b>Parallel:</b> each engine hears the dry signal on its own, and their outputs are summed. Clearer and more defined.</li>
 <li><b>Reverb › Delay:</b> the reverb comes first and the delay repeats the reverb tail. Good for big ambient throws.</li>
 <li><b>Advanced:</b> shows every parameter of each engine, below its main knobs.</li>
 </ul>
 <h2 id="display">Display</h2>
-<p>The display shows one time line with the dry hit, the delay repeats, the shimmer grains and the reverb envelope, each in its engine&#x27;s colour. It follows every knob move immediately.</p>
+<p>The display shows one time line with the dry hit, the delay repeats, the rising shimmer and the reverb envelope, each in its engine&#x27;s colour. It follows every knob move immediately.</p>
 <h2 id="delay">Delay</h2>
 <p>A tempo-synced stereo delay with analog, tape and lo-fi characters.</p>
 <ul>
@@ -62,14 +62,15 @@ main a{color:var(--cyan)}</style></head><body>
 <li><b>Advanced:</b> Low-Cut (thins the repeats), Drive (saturation inside the feedback loop), Ducking (lowers the repeats while you play, so they bloom in the gaps), Mod Rate and Mod Depth (pitch movement of the repeats).</li>
 </ul>
 <h2 id="shimmer">Shimmer</h2>
-<p>A granular pitch shifter in a feedback loop, for octave-up halos and evolving textures.</p>
+<p>A shimmer reverb: a lush, modulated reverb with pitch shifters inside its feedback loop. Each time the tail goes round the loop, part of it is shifted up (or down) again, so the sound climbs octave by octave into a bright, choir-like wash that grows out of what you play. It is a complete reverb of its own and works without the Reverb section.</p>
 <ul>
-<li><b>Pitch A and Pitch B:</b> two grain voices, each shifted from -24 to +24 semitones. +12 is an octave up, +7 a fifth.</li>
-<li><b>Feedback:</b> feeds the shifted grains back into the shifter, so each pass climbs or falls again.</li>
+<li><b>Interval A:</b> the main pitch step of each pass, from -24 to +24 semitones. +12 (an octave up) is the classic shimmer; +7 is a fifth, +19 an octave and a fifth.</li>
+<li><b>Interval B:</b> a second, quieter voice, for example +7 over the octave, or -12 for an octave down underneath. Off at 0.</li>
+<li><b>Shimmer:</b> how much of the tail is pitch shifted on each pass, which sets how fast and how far the sound climbs. Low values add a gentle halo; high values bloom into a rising cloud.</li>
 <li><b>Level:</b> output level of the shimmer.</li>
-<li><b>Reverse:</b> Off, On (grains play backwards) or Random.</li>
-<li><b>Advanced:</b> Grain (length of each grain, short is glassy and long is smooth), Density (how many grains overlap), Spray (random timing of the grains).</li>
-<li><b>Tip:</b> in Serial routing the shimmer feeds the reverb, which turns the grains into a smooth wash.</li>
+<li><b>Voice:</b> Smooth, or Reverse (each fragment of the shifted sound plays backwards: softer, like an organ).</li>
+<li><b>Advanced:</b> Decay (length of the tail), Size (size of the space; bigger also climbs more slowly), Diffusion (how quickly echoes melt into a smooth wash), Mod (gentle movement that keeps the tail lush), Tone (how high the climbing octaves may go before they are softened) and Low-Cut (keeps low end and downward shifts from getting muddy).</li>
+<li><b>Tip:</b> for the classic sound start with Interval A at +12, Shimmer around 50 % and a long Decay, then use Tone to choose between a soft glow and a bright sparkle.</li>
 </ul>
 <h2 id="reverb">Reverb</h2>
 <p>An algorithmic reverb: six types of space, each available in five eras.</p>
@@ -115,14 +116,14 @@ main a{color:var(--cyan)}</style></head><body>
 <li><b>Keys &amp; Piano:</b> halls and rooms for piano, Rhodes and organ.</li>
 <li><b>Synths &amp; Pads:</b> shimmer pads, lush halls and rhythmic echoes.</li>
 <li><b>Strings &amp; Orchestral:</b> scoring stages and concert halls.</li>
-<li><b>Ambient &amp; FX:</b> freezes, reverse grains and runaway feedback.</li>
+<li><b>Ambient &amp; FX:</b> freezes, reverse shimmers and runaway feedback.</li>
 <li><b>Vintage:</b> the 60s, 70s, 80s and 90s studio sounds.</li>
 <li><b>Send (100% Wet):</b> ready-made aux returns.</li>
 </ul>
 <h2 id="licence">Licence</h2>
 <ul>
 <li>Lumen is free. Get it from <a href="../../account/">My plugins</a> at audiocrafts.razburg.com, with your free site account.</li>
-<li><b>Lumen is protected with iLok:</b> redeem the iLok code from My plugins in iLok License Manager with your free iLok account, and activate Lumen on up to two computers. To move it to another computer, deactivate it in iLok License Manager first.</li>
+<li><b>Lumen is protected with iLok:</b> redeem the iLok code from <a href="../../account/">My plugins</a> in iLok License Manager with your free iLok account, and activate Lumen on up to two computers. To move it to another computer, deactivate it in iLok License Manager first.</li>
 </ul>
 <h2 id="support">Support</h2>
 <p>Visit audiocrafts.razburg.com for updates and support.</p>
