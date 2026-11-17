@@ -9,3 +9,9 @@ Static site for https://audiocrafts.razburg.com, deployed by Netlify on every pu
 ## Accounts
 Sign up / sign in and the My plugins library live at `/account/` (Supabase auth,
 static page). Setup steps: `supabase/SETUP.md`. Schema: `supabase/schema.sql`.
+
+## Design
+Shared styles live in `css/site.css` (self-hosted Inter / Inter Tight in `fonts/`).
+Home `index.html` and product pages `lumen/`, `chroma/`, `convert/` share the same
+top bar and footer markup; keep them in sync when adding a product. The plugin
+"Buy"/info button points to `/#lumen`, so keep the `#lumen` anchor on the home page.
