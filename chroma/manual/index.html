@@ -48,8 +48,8 @@ main a{color:var(--cyan)}</style></head><body>
 <li><b>Attack:</b> how fast the compressor grabs (0.05 ms to 200 ms). Each character has its own fastest attack.</li>
 <li><b>Release:</b> how fast it lets go (20 ms to 3 s).</li>
 <li><b>Ratio:</b> how hard it compresses, from 1:1 (no compression) to 20:1.</li>
-<li><b>Saturation:</b> harmonic saturation in the voice of the current character. At 0% it is off.</li>
-<li><b>Parallel:</b> blends the untouched source (0%) with the processed signal (100%) for parallel compression.</li>
+<li><b>Saturation (Amount):</b> harmonic saturation in the voice of the current character. At 0% it is off. It colors the whole output after the Parallel blend, so it sounds the same at any Parallel setting.</li>
+<li><b>Parallel (Mix):</b> blends the untouched source (0%) with the compressed signal (100%) for parallel compression. It only sets how much compression you hear and does not change the Saturation.</li>
 <li><b>Soft Clip:</b> a soft clipper on the final output that rounds off peaks above about -4 dBFS and keeps them below 0 dBFS.</li>
 </ul>
 <h2 id="key-sidechain">Key (sidechain)</h2>
