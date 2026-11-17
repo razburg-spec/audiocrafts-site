@@ -12,11 +12,11 @@
     },
     "chroma": {
       "name": "Chroma",
-      "latest": "0.1.2",
+      "latest": "0.1.3",
       "released": "2026-11-17",
       "download_url": "https://audiocrafts.razburg.com/account/#claim=chroma",
       "notes_url": "https://audiocrafts.razburg.com/chroma/manual/",
-      "notes": "First public release: VST3, AU and AAX for Mac."
+      "notes": "Saturation and Parallel are now separate controls."
     },
     "convert": {
       "name": "Convert",
