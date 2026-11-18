@@ -15,3 +15,8 @@ Shared styles live in `css/site.css` (self-hosted Inter / Inter Tight in `fonts/
 Home `index.html` and product pages `lumen/`, `chroma/`, `convert/` share the same
 top bar and footer markup; keep them in sync when adding a product. The plugin
 "Buy"/info button points to `/#lumen`, so keep the `#lumen` anchor on the home page.
+
+## Version manifest
+`/versions.json` lists the latest version of each product for in-plugin update
+checks (`products.<slug>.latest`, `download_url`, `notes`). Bump it with every
+release. Served with CORS `*` and a 5-minute cache (`_headers`).
