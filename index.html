@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Raz Burg AudioCrafts · Audio plugins for Pro Tools, Logic and Cubase</title>
-<meta name="description" content="Lumen reverb and delay, Chroma multi-character compressor and the Convert media app. Studio plugins by Raz Burg, free with an account.">
+<meta name="description" content="Lumen reverb and delay, Chroma multi-character compressor, Prism multi-character EQ (coming soon) and the Convert media app. Studio plugins by Raz Burg, free with an account.">
 <meta name="theme-color" content="#0B0E13">
 <meta property="og:title" content="Raz Burg AudioCrafts · Audio plugins for Pro Tools, Logic and Cubase">
-<meta property="og:description" content="Lumen reverb and delay, Chroma multi-character compressor and the Convert media app. Studio plugins by Raz Burg, free with an account.">
+<meta property="og:description" content="Lumen reverb and delay, Chroma multi-character compressor, Prism multi-character EQ (coming soon) and the Convert media app. Studio plugins by Raz Burg, free with an account.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='118' fill='%231A4FC4'/%3E%3Cg fill='none' stroke-linecap='round' stroke-width='28' transform='rotate(135 256 256)'%3E%3Ccircle cx='256' cy='256' r='178' stroke='%23fff' stroke-dasharray='839 280'/%3E%3Ccircle cx='256' cy='256' r='124' stroke='%238DDCFF' stroke-dasharray='545 234'/%3E%3Ccircle cx='256' cy='256' r='70' stroke='%236F9CFF' stroke-dasharray='290 150'/%3E%3C/g%3E%3Ccircle cx='256' cy='256' r='22' fill='%23fff'/%3E%3C/svg%3E">
 <link rel="preload" href="/fonts/inter-tight-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -20,6 +20,7 @@
 <nav class="menu" aria-label="Main">
 <a href="/lumen/">Lumen</a>
 <a href="/chroma/">Chroma</a>
+<a href="/prism/">Prism</a>
 <a href="/convert/">Convert</a>
 <span class="sep"></span>
 <a href="/#how">Free licence</a>
@@ -59,7 +60,7 @@
 <section class="sec" id="plugins">
 <div class="wrap">
 <div class="sec-head rv">
-<div><div class="eyebrow muted">The collection</div><h2>Three tools. Each with its own voice.</h2></div>
+<div><div class="eyebrow muted">The collection</div><h2>Four tools. Each with its own voice.</h2></div>
 <p>Every product opens neutral, so nothing changes until you decide it should. Then it goes as far as you want.</p>
 </div>
 <div class="lineup">
@@ -73,6 +74,11 @@
 <div class="txt"><h3>Chroma</h3><div class="cat">Multi-character compressor</div>
 <p>Six compressor voices on a single knob, from smooth optical leveling to raw, pumping grit.</p>
 <div class="tfoot"><span>Free · v0.1.1</span><b>Discover <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></b></div></div></a>
+<a class="tile rv" href="/prism/" style="--accent:var(--violet)"><span class="bar"></span>
+<div class="pic"><img src="/img/prism.jpg" alt="Prism interface" width="1400" height="988" loading="lazy"></div>
+<div class="txt"><h3>Prism</h3><div class="cat">Multi-character EQ</div>
+<p>Six EQ voices with the same controls, a big curve display and a live before-and-after spectrum.</p>
+<div class="tfoot"><span class="soon">Coming soon</span><b>Preview <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></b></div></div></a>
 <a class="tile rv" href="/convert/" style="--accent:var(--blue)"><span class="bar"></span>
 <div class="pic"><img src="/img/convert.jpg" alt="Convert interface" width="1400" height="924" loading="lazy"></div>
 <div class="txt"><h3>Convert</h3><div class="cat">Media converter app</div>
@@ -136,6 +142,26 @@
 </div>
 </section>
 
+<section class="spot flip" id="prism" style="--accent:var(--violet)">
+<div class="wrap">
+<div class="copy rv">
+<div class="eyebrow">Multi-character EQ · Coming soon</div>
+<h2>Prism</h2>
+<p class="tag">Six EQs. The same controls.</p>
+<p>Shape your sound once, then switch between Vintage, Retro, Chubby, Indie, Modern and Bus to hear the same curve in six different voices. A low cut or shelf, four bands, a high cut or shelf, and a big display that shows the source before the EQ with the result layered on top.</p>
+<div class="btns"><a class="btn btn-accent" href="/prism/">Preview Prism</a></div>
+<p class="meta"><b>Coming soon</b> · AAX, AU, VST3 · macOS and Windows</p>
+</div>
+<div class="media rv"><img class="shot" src="/img/prism.jpg" alt="Prism EQ interface with the curve display, live spectrum and six band strips" width="1400" height="988" loading="lazy"></div>
+</div>
+<div class="wrap under"><div class="specs rv">
+<div><b class="num">6</b><span>EQ modes, one set of controls</span></div>
+<div><b class="num">6</b><span>Bands: low cut or shelf, four bells, high cut or shelf</span></div>
+<div><b class="num">0</b><span>Samples of latency</span></div>
+<div><b class="num">48</b><span>dB per octave cuts at most</span></div>
+</div></div>
+</section>
+
 <section class="sec" id="how" style="border-top:1px solid var(--line)">
 <div class="wrap">
 <div class="sec-head rv">
@@ -182,7 +208,7 @@
 <a class="logo" href="/"><svg viewBox="0 0 512 512" aria-hidden="true"><defs><linearGradient id="lt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A63E0"/><stop offset=".55" stop-color="#1A4FC4"/><stop offset="1" stop-color="#11287A"/></linearGradient><linearGradient id="ls" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".18"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/></linearGradient></defs><rect width="512" height="512" rx="118" fill="url(#lt)"/><rect width="512" height="512" rx="118" fill="url(#ls)"/><g fill="none" stroke-linecap="round" stroke-width="28" transform="rotate(135 256 256)"><circle cx="256" cy="256" r="178" stroke="#fff" stroke-dasharray="839 280"/><circle cx="256" cy="256" r="124" stroke="#8DDCFF" stroke-dasharray="545 234"/><circle cx="256" cy="256" r="70" stroke="#6F9CFF" stroke-dasharray="290 150"/></g><circle cx="256" cy="256" r="22" fill="#fff"/></svg><span class="wm">Raz Burg<small>AudioCrafts</small></span></a>
 <p class="blurb">Audio plugins and tools by Raz Burg. Free for everyone with an account.</p>
 </div>
-<div><h4>Products</h4><ul><li><a href="/lumen/">Lumen</a></li><li><a href="/chroma/">Chroma</a></li><li><a href="/convert/">Convert</a></li></ul></div>
+<div><h4>Products</h4><ul><li><a href="/lumen/">Lumen</a></li><li><a href="/chroma/">Chroma</a></li><li><a href="/prism/">Prism</a> <span class="soon">Soon</span></li><li><a href="/convert/">Convert</a></li></ul></div>
 <div><h4>Support</h4><ul><li><a href="/lumen/manual/">Lumen user guide</a></li><li><a href="/chroma/manual/">Chroma user guide</a></li><li><a href="/account/">My plugins</a></li></ul></div>
 <div><h4>Legal</h4><ul><li><a href="/terms/">Terms of Use</a></li><li><a href="/privacy/">Privacy Policy</a></li></ul></div>
 </div>
