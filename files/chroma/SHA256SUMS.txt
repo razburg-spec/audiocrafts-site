@@ -1,1 +1,2 @@
 e663e973e2a2864cc4a4be86bd49fb57530aab7b82d637cd5f4cb787824d7ae3  Chroma-0.1.3-Windows-Setup.exe
+96d9ce73091b44e9f3dc5641c0b522674c43b3464ad2d22f4adf751990e7d8ae  Chroma-0.1.3-mac.pkg
