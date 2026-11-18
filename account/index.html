@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>My plugins · Raz Burg AudioCrafts</title>
-<meta name="description" content="Sign in to Raz Burg AudioCrafts to get your free plugins, iLok activation codes and installers.">
+<meta name="description" content="Sign in to Raz Burg AudioCrafts to get your free plugins and installers, and activate them on your computers.">
 <meta name="robots" content="noindex">
 <link rel="icon" href="../img/logo.svg">
 <style>
@@ -65,6 +65,13 @@ input:focus{outline:none;border-color:var(--blue)}
 .steps{font-size:13.5px;color:var(--muted);margin:12px 0 0 18px}
 .steps li{margin:3px 0}
 .pending{font-size:14px;color:var(--amber)}
+.act{padding:24px 28px;margin-bottom:22px;--accent:var(--green)}
+.act h2{font-size:20px;font-weight:600;margin-bottom:6px}
+.act p{color:var(--muted);font-size:14.5px;margin-bottom:14px}
+.act .row{display:flex;gap:10px;flex-wrap:wrap}
+.pcs{display:grid;gap:8px}
+.pc{display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--display);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:13px;color:var(--muted);line-height:1.4}
+.pc b{color:var(--text);font-weight:600;display:block;font-size:14px}
 .dls{display:grid;gap:10px}
 .dl{display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--display);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
 .dl .meta{font-size:13px;color:var(--muted);line-height:1.4}
@@ -107,7 +114,7 @@ h1{font-weight:700!important;letter-spacing:-.025em}
 <!-- Signed out -->
 <section id="v-auth" class="hidden">
 <h1 style="text-align:center">All plugins. Free.</h1>
-<p class="lead" style="margin:0 auto;text-align:center">Create a free account to add plugins to your library, get your iLok activation codes and download the installers for Mac and Windows.</p>
+<p class="lead" style="margin:0 auto;text-align:center">Create a free account to add plugins to your library and download the installers for Mac and Windows.</p>
 <div class="card auth">
 <div class="tabs" role="tablist"><button class="on" data-tab="signup" role="tab">Create account</button><button data-tab="signin" role="tab">Sign in</button></div>
 <form id="f-auth" novalidate>
@@ -120,7 +127,7 @@ h1{font-weight:700!important;letter-spacing:-.025em}
 <div class="aux"><button type="button" class="linkbtn hidden" id="to-forgot">Forgot password?</button><span></span></div>
 <div class="msg" id="auth-msg"></div>
 </form>
-<p class="note">Each plugin comes with an iLok licence for up to two computers.</p>
+<p class="note">Activate each plugin on up to two computers by signing in once from inside the plugin.</p>
 </div>
 </section>
 
@@ -155,12 +162,13 @@ h1{font-weight:700!important;letter-spacing:-.025em}
 <!-- Signed in -->
 <section id="v-dash" class="hidden">
 <h1>My plugins</h1>
-<p class="lead">Everything is free. Add a plugin to your library to get its iLok activation code and installers. Each code activates the plugin on up to two computers.</p>
+<p class="lead">Everything is free. Add a plugin to your library to download it. The first time you open it, click Activate in the plugin and approve it here. Each plugin runs on up to two computers.</p>
+<div class="card act hidden" id="act"></div>
 <div class="msg" id="dash-msg" style="margin-bottom:20px"></div>
 <div class="grid" id="products"></div>
 <div class="danger"><button class="linkbtn" id="to-delete" style="color:var(--faint)">Delete my account</button></div>
 <div class="card confirm" id="confirm">
-<p>This permanently deletes your account and your plugin library. Plugins you already activated keep working in iLok. Type <b>DELETE</b> to confirm.</p>
+<p>This permanently deletes your account and your plugin library. Your activated computers are deactivated too. Type <b>DELETE</b> to confirm.</p>
 <input type="text" id="confirm-text" autocomplete="off">
 <div style="display:flex;gap:10px;margin-top:12px"><button class="btn red small" id="do-delete" disabled>Delete account</button><button class="btn ghost small" id="cancel-delete">Cancel</button></div>
 </div>
@@ -194,6 +202,28 @@ h1{font-weight:700!important;letter-spacing:-.025em}
   if (m) { try { sessionStorage.setItem("rba-claim", m[1]); } catch (e) {} history.replaceState(null, "", location.pathname); }
   function pendingClaim() { try { return sessionStorage.getItem("rba-claim"); } catch (e) { return null; } }
   function clearClaim() { try { sessionStorage.removeItem("rba-claim"); } catch (e) {} }
+
+  // A plugin asking to be activated opens /account/#activate=<slug>&m=<machine>&n=<name>&r=<nonce>.
+  // Kept in localStorage for 30 minutes so it survives the sign-up confirmation email opening a new tab.
+  var ACT_KEY = "rba-activate";
+  var am = location.hash.match(/activate=([a-z0-9-]+)/);
+  if (am) {
+    var hp = new URLSearchParams(location.hash.slice(1));
+    var req = { slug: am[1], machine: hp.get("m") || "", name: hp.get("n") || "", nonce: hp.get("r") || "", at: Date.now() };
+    if (/^[A-Za-z0-9]{16,128}$/.test(req.machine) && /^[A-Za-z0-9]{32,128}$/.test(req.nonce)) {
+      try { localStorage.setItem(ACT_KEY, JSON.stringify(req)); } catch (e) {}
+    }
+    history.replaceState(null, "", location.pathname);
+  }
+  function pendingActivation() {
+    try {
+      var r = JSON.parse(localStorage.getItem(ACT_KEY) || "null");
+      if (r && Date.now() - r.at < 30 * 60 * 1000) return r;
+      localStorage.removeItem(ACT_KEY);
+    } catch (e) {}
+    return null;
+  }
+  function clearActivation() { try { localStorage.removeItem(ACT_KEY); } catch (e) {} }
 
   // ── Auth forms ──
   var mode = "signup";
@@ -267,6 +297,44 @@ h1{font-weight:700!important;letter-spacing:-.025em}
     await sb.auth.signOut();
   });
 
+  // ── Activation ──
+  async function removeComputer(session, id, btn) {
+    btn.disabled = true;
+    var r = await sb.from("activations").delete().eq("id", id);
+    if (r.error) { btn.disabled = false; msg($("dash-msg"), "Could not remove the computer: " + r.error.message); return; }
+    await loadDashboard(session);
+  }
+
+  function renderActivationRequest(session, names, pcs) {
+    var box = $("act"), req = pendingActivation();
+    if (!req) { box.classList.add("hidden"); box.innerHTML = ""; return; }
+    var name = names[req.slug] || req.slug;
+    box.classList.remove("hidden");
+    box.innerHTML = '<h2>Activate ' + esc(name) + ' on ' + esc(req.name || "this computer") + '?</h2>' +
+      '<p>Approve this only if you just clicked Activate in ' + esc(name) + ' yourself. Each plugin runs on up to two computers, and you can remove one here at any time.</p>' +
+      '<div class="row"><button class="btn primary small" id="act-go">Activate</button><button class="btn ghost small" id="act-no">Cancel</button></div>' +
+      '<div class="msg" id="act-msg"></div>';
+    $("act-no").addEventListener("click", function () { clearActivation(); box.classList.add("hidden"); });
+    $("act-go").addEventListener("click", async function () {
+      var b = this; b.disabled = true;
+      var r = await sb.rpc("activation_approve", { p_nonce: req.nonce, p_slug: req.slug, p_machine: req.machine, p_name: req.name });
+      if (r.error) {
+        b.disabled = false;
+        var t = r.error.message || "";
+        if (/limit_reached/.test(t)) t = name + " is already active on two computers. Remove one below, then click Activate again.";
+        else if (/unknown_product/.test(t)) t = "This plugin cannot be activated here.";
+        else t = "Activation failed. Please try again. (" + t + ")";
+        msg($("act-msg"), t);
+        return;
+      }
+      clearActivation();
+      await loadDashboard(session);
+      box.classList.remove("hidden");
+      box.innerHTML = '<h2>' + esc(name) + ' is activated</h2><p>Go back to your DAW. ' + esc(name) + ' unlocks by itself within a few seconds. You can close this tab.</p>';
+    });
+    box.scrollIntoView({ block: "start" });
+  }
+
   // ── Dashboard ──
   async function loadDashboard(session) {
     $("who-email").textContent = session.user.email;
@@ -278,13 +346,17 @@ h1{font-weight:700!important;letter-spacing:-.025em}
     var res = await Promise.all([
       sb.from("products").select("*").eq("available", true).order("sort"),
       sb.from("downloads").select("*").eq("published", true).order("platform"),
-      sb.rpc("my_plugins")
+      sb.rpc("my_plugins"),
+      sb.from("activations").select("id,product_slug,machine_name,created_at,last_seen").order("created_at")
     ]);
-    var err = res[0].error || res[1].error || res[2].error;
+    var err = res[0].error || res[1].error || res[2].error || res[3].error;
     if (err) { msg($("dash-msg"), "We could not load your plugins. Please refresh the page. (" + err.message + ")"); return; }
     var mine = {}; (res[2].data || []).forEach(function (c) { mine[c.product_slug] = c; });
     var dls = res[1].data || [];
+    var pcs = res[3].data || [];
+    var names = {}; res[0].data.forEach(function (p) { names[p.slug] = p.name; });
     var wrap = $("products"); wrap.innerHTML = "";
+    renderActivationRequest(session, names, pcs);
 
     res[0].data.forEach(function (p) {
       var owned = !!mine[p.slug];
@@ -296,14 +368,15 @@ h1{font-weight:700!important;letter-spacing:-.025em}
       var html = '<div><div class="pname">' + esc(p.name) + '</div><div class="caps ptype">' + esc(p.tagline) + '</div></div><div class="side">' + side + '</div>';
       if (owned) {
         var lic = "";
-        if (p.needs_ilok) {
-          var c = mine[p.slug];
-          lic = '<div><h3>iLok activation code</h3>' + (c.license_code
-            ? '<div class="code"><code>' + esc(c.license_code) + '</code><button class="btn ghost small" data-copy="' + esc(c.license_code) + '">Copy</button></div>' +
-              '<ol class="steps"><li>Install <a href="https://www.ilok.com/#!license-manager" target="_blank" rel="noopener">iLok License Manager</a> and sign in with your free iLok account.</li><li>Choose Licenses › Redeem an Activation Code and paste the code.</li><li>Activate ' + esc(p.name) + ' on up to two computers or iLok keys.</li></ol>'
-            : '<p class="pending">Your activation code is being prepared. It will appear here as soon as it is ready, so check back soon.</p>') + '</div>';
+        if (p.needs_activation) {
+          var mPcs = pcs.filter(function (x) { return x.product_slug === p.slug; });
+          lic = '<div><h3>Activated computers · ' + mPcs.length + ' of 2</h3>' + (mPcs.length ? '<div class="pcs">' + mPcs.map(function (x) {
+            return '<div class="pc"><div><b>' + esc(x.machine_name || "Computer") + '</b>Activated ' + new Date(x.created_at).toLocaleDateString() + '</div>' +
+              '<button class="btn ghost small" data-unpc="' + x.id + '">Remove</button></div>';
+          }).join("") + '</div>' : '<p class="empty">Not activated on any computer yet.</p>') +
+            '<ol class="steps"><li>Install ' + esc(p.name) + ' and open it in your DAW.</li><li>Click Activate in the plugin. Your browser opens this page.</li><li>Click Activate here. ' + esc(p.name) + ' unlocks by itself a few seconds later.</li></ol></div>';
         } else {
-          lic = '<div><h3>Licence</h3><p class="empty">No licence or iLok needed. Just download and run.</p></div>';
+          lic = '<div><h3>Licence</h3><p class="empty">No licence needed. Just download and run.</p></div>';
         }
         var mineDl = dls.filter(function (d) { return d.product_slug === p.slug; });
         var dlHtml = '<div><h3>Downloads</h3>' + (mineDl.length ? '<div class="dls">' + mineDl.map(function (d) {
@@ -325,10 +398,8 @@ h1{font-weight:700!important;letter-spacing:-.025em}
         var el = $("p-" + b.dataset.claim); if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
       });
     });
-    wrap.querySelectorAll("[data-copy]").forEach(function (b) {
-      b.addEventListener("click", function () {
-        navigator.clipboard.writeText(b.dataset.copy).then(function () { b.textContent = "Copied"; setTimeout(function () { b.textContent = "Copy"; }, 1500); });
-      });
+    wrap.querySelectorAll("[data-unpc]").forEach(function (b) {
+      b.addEventListener("click", function () { removeComputer(session, b.dataset.unpc, b); });
     });
     wrap.querySelectorAll("[data-dl]").forEach(function (b) {
       b.addEventListener("click", async function () {
@@ -366,6 +437,10 @@ h1{font-weight:700!important;letter-spacing:-.025em}
     if (event === "SIGNED_IN" || event === "SIGNED_OUT" || event === "INITIAL_SESSION") setTimeout(function () { render(session); }, 0);
   });
   if (pendingClaim()) setMode("signup");
+  if (pendingActivation()) {
+    setMode("signin");
+    msg($("auth-msg"), "Sign in (or create a free account) to activate your plugin on this computer.", true);
+  }
 
   // Links in our own email templates point back here as ?token_hash=...&type=...
   // (keeps every link in the email on audiocrafts.razburg.com, which mail filters trust more).
