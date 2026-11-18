@@ -62,3 +62,13 @@ the request through only if the short-lived `rba_at` cookie belongs to a user
 who added that product. Add a `downloads` row with `public_url = '/files/<slug>/<file>'`.
 Note: the GitHub repo is public, so files committed here are also visible on
 GitHub; make the repo private to close that.
+
+## 5. Auth emails (Resend)
+- Authentication → SMTP: custom SMTP via Resend (`smtp.resend.com:465`, user `resend`,
+  password = a Resend "Sending access" API key), sender `no-reply@audiocrafts.razburg.com`,
+  name "Raz Burg AudioCrafts". Domain `audiocrafts.razburg.com` is verified in Resend
+  (DKIM `resend._domainkey`, SPF/return path `send.`, DMARC `_dmarc.audiocrafts`).
+- Authentication → Emails → Templates: paste `supabase/email-templates/*.html` with the
+  subjects in `subjects.json`. Links go to `{{ .SiteURL }}?token_hash=...&type=...`, so
+  every link in the email stays on audiocrafts.razburg.com (better for spam filters);
+  `/account/` verifies the token with `verifyOtp`.
