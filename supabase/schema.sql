@@ -178,3 +178,11 @@ select * from (values
   ('convert', 'windows', 'App', '0.1.0', 'Windows 10/11 · x64',       '/files/convert/Convert_0.1.0_x64-setup.exe', 88489556::bigint, 'If Windows warns on first launch, click More info, then Run anyway.')
 ) v(product_slug, platform, formats, version, min_os, public_url, size_bytes, note)
 where not exists (select 1 from public.downloads d where d.product_slug = 'convert');
+
+-- Plugin installers served through the /files/* gate (one row per file).
+insert into public.downloads (product_slug, platform, formats, version, min_os, public_url, size_bytes, note)
+select * from (values
+  ('lumen',  'windows', 'VST3', '0.3.1', 'Windows 10/11 · 64-bit', '/files/lumen/Lumen-0.3.1-Windows-Setup.exe',   4091386::bigint, 'Not signed yet: if Windows shows "Windows protected your PC", click More info, then Run anyway. AAX for Pro Tools on Windows coming soon.'),
+  ('chroma', 'windows', 'VST3', '0.1.3', 'Windows 10/11 · 64-bit', '/files/chroma/Chroma-0.1.3-Windows-Setup.exe', 4057247::bigint, 'Not signed yet: if Windows shows "Windows protected your PC", click More info, then Run anyway. AAX for Pro Tools on Windows coming soon.')
+) v(product_slug, platform, formats, version, min_os, public_url, size_bytes, note)
+where not exists (select 1 from public.downloads d where d.public_url = v.public_url);
