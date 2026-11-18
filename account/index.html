@@ -366,6 +366,25 @@ h1{font-weight:700!important;letter-spacing:-.025em}
     if (event === "SIGNED_IN" || event === "SIGNED_OUT" || event === "INITIAL_SESSION") setTimeout(function () { render(session); }, 0);
   });
   if (pendingClaim()) setMode("signup");
+
+  // Links in our own email templates point back here as ?token_hash=...&type=...
+  // (keeps every link in the email on audiocrafts.razburg.com, which mail filters trust more).
+  var qs = new URLSearchParams(location.search);
+  var th = qs.get("token_hash"), tt = qs.get("type");
+  if (th && tt) {
+    history.replaceState(null, "", location.pathname + location.hash);
+    if (tt === "recovery") recovering = true;
+    sb.auth.verifyOtp({ token_hash: th, type: tt }).then(function (r) {
+      if (r.error) {
+        recovering = false;
+        setMode("signin"); show("v-auth");
+        msg($("auth-msg"), "This link has expired or was already used. Sign in, or ask for a new link.");
+        return;
+      }
+      if (tt === "recovery") { show("v-reset"); return; }
+      render(r.data.session);
+    });
+  }
 })();
 </script>
 </body>
