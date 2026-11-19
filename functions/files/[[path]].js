@@ -15,6 +15,8 @@ const MOVED = {
   "/files/lumen/Lumen-0.4.0-Windows-Setup.exe": "/files/lumen/Lumen-0.4.1-Windows-Setup.exe",
   "/files/chroma/Chroma-0.1.3-Windows-Setup.exe": "/files/chroma/Chroma-0.1.5-Windows-Setup.exe",
   "/files/chroma/Chroma-0.1.4-Windows-Setup.exe": "/files/chroma/Chroma-0.1.5-Windows-Setup.exe",
+  "/files/lumen/Lumen-0.3.1-mac.pkg": "/files/lumen/Lumen-0.4.1-mac.pkg",
+  "/files/chroma/Chroma-0.1.3-mac.pkg": "/files/chroma/Chroma-0.1.5-mac.pkg",
 };
 
 // Files over Cloudflare Pages' 25 MiB limit are left out of the build
