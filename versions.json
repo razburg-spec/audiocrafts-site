@@ -2,14 +2,6 @@
   "schema": 1,
   "updated": "2026-11-19",
   "products": {
-    "lumen": {
-      "name": "Lumen",
-      "latest": "0.4.1",
-      "released": "2026-11-19",
-      "download_url": "https://audiocrafts.razburg.com/account/#claim=lumen",
-      "notes_url": "https://audiocrafts.razburg.com/lumen/manual/",
-      "notes": "Rebuilt shimmer inside the reverb. Activate with your free AudioCrafts account (2 computers)."
-    },
     "chroma": {
       "name": "Chroma",
       "latest": "0.1.5",
@@ -17,6 +9,22 @@
       "download_url": "https://audiocrafts.razburg.com/account/#claim=chroma",
       "notes_url": "https://audiocrafts.razburg.com/chroma/manual/",
       "notes": "Activate with your free AudioCrafts account (2 computers)."
+    },
+    "prism": {
+      "name": "Prism",
+      "latest": "1.0.0",
+      "released": "2026-11-19",
+      "download_url": "https://audiocrafts.razburg.com/account/#claim=prism",
+      "notes_url": "https://audiocrafts.razburg.com/prism/manual/",
+      "notes": "First public release: VST3, AU and AAX for Mac, VST3 for Windows."
+    },
+    "lumen": {
+      "name": "Lumen",
+      "latest": "0.4.1",
+      "released": "2026-11-19",
+      "download_url": "https://audiocrafts.razburg.com/account/#claim=lumen",
+      "notes_url": "https://audiocrafts.razburg.com/lumen/manual/",
+      "notes": "Rebuilt shimmer inside the reverb. Activate with your free AudioCrafts account (2 computers)."
     },
     "convert": {
       "name": "Convert",

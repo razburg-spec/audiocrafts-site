@@ -1,0 +1,2 @@
+c8ac6dc171080c338df7a61996989bc05704c281cc0e8bbb1ae1da8e57d3c309  Prism-1.0.0-Windows-Setup.exe
+cf8340c9cb916a4487830c63ddc4a826eba3aa5866ba44ba6ebc61f4876d7e1d  Prism-1.0.0-mac.pkg
