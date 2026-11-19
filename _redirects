@@ -1,2 +1,4 @@
 /download/convert-mac      /account/#claim=convert  302
 /download/convert-windows  /account/#claim=convert  302
+/files/convert/Convert_0.1.0_aarch64.dmg   /files/convert/Convert_0.1.1_aarch64.dmg   301
+/files/convert/Convert_0.1.0_x64-setup.exe /files/convert/Convert_0.1.1_x64-setup.exe 301
