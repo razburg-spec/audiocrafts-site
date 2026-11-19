@@ -182,9 +182,9 @@ where not exists (select 1 from public.downloads d where d.product_slug = 'conve
 -- Plugin installers served through the /files/* gate (one row per file).
 insert into public.downloads (product_slug, platform, formats, version, min_os, public_url, size_bytes, note)
 select * from (values
-  ('lumen',  'windows', 'VST3', '0.3.1', 'Windows 10/11 · 64-bit', '/files/lumen/Lumen-0.3.1-Windows-Setup.exe',   4091386::bigint, 'Not signed yet: if Windows shows "Windows protected your PC", click More info, then Run anyway. AAX for Pro Tools on Windows coming soon.'),
+  ('lumen',  'windows', 'VST3', '0.4.0', 'Windows 10/11 · 64-bit', '/files/lumen/Lumen-0.4.0-Windows-Setup.exe',   4106520::bigint, 'Not signed yet: if Windows shows "Windows protected your PC", click More info, then Run anyway. AAX for Pro Tools on Windows coming soon.'),
   ('lumen',  'mac',     'AAX · VST3 · AU', '0.3.1', 'macOS 11+ · Apple Silicon & Intel', '/files/lumen/Lumen-0.3.1-mac.pkg',   10513960::bigint, 'Signed and notarized by Apple. Installs AAX (Pro Tools), VST3 and AU.'),
   ('chroma', 'mac',     'AAX · VST3 · AU', '0.1.3', 'macOS 11+ · Apple Silicon & Intel', '/files/chroma/Chroma-0.1.3-mac.pkg', 10107547::bigint, 'Signed and notarized by Apple. Installs AAX (Pro Tools), VST3 and AU.'),
-  ('chroma', 'windows', 'VST3', '0.1.3', 'Windows 10/11 · 64-bit', '/files/chroma/Chroma-0.1.3-Windows-Setup.exe', 4057247::bigint, 'Not signed yet: if Windows shows "Windows protected your PC", click More info, then Run anyway. AAX for Pro Tools on Windows coming soon.')
+  ('chroma', 'windows', 'VST3', '0.1.4', 'Windows 10/11 · 64-bit', '/files/chroma/Chroma-0.1.4-Windows-Setup.exe', 4068862::bigint, 'Not signed yet: if Windows shows "Windows protected your PC", click More info, then Run anyway. AAX for Pro Tools on Windows coming soon.')
 ) v(product_slug, platform, formats, version, min_os, public_url, size_bytes, note)
 where not exists (select 1 from public.downloads d where d.public_url = v.public_url);
