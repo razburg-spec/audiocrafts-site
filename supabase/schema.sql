@@ -259,6 +259,7 @@ create policy "claimed users read installers" on storage.objects
 
 insert into public.products (slug, name, tagline, needs_ilok, needs_activation, sort) values
   ('chroma',  'Chroma',  'Multi-character compressor',        false, true,  1),
+  ('prism',   'Prism',   'Multi-character EQ',                false, true,  2),
   ('lumen',   'Lumen',   'Reverb · Delay · Shimmer',          false, true,  3),
   ('convert', 'Convert', 'Media converter · no licence needed', false, false, 4)
 on conflict (slug) do update
@@ -278,6 +279,8 @@ select * from (values
   ('lumen',  'windows', 'VST3', '0.4.1', 'Windows 10/11 · 64-bit', '/files/lumen/Lumen-0.4.1-Windows-Setup.exe',   4107090::bigint, 'Not signed yet: if Windows shows "Windows protected your PC", click More info, then Run anyway. AAX for Pro Tools on Windows coming soon.'),
   ('lumen',  'mac',     'AAX · VST3 · AU', '0.4.1', 'macOS 11+ · Apple Silicon & Intel', '/files/lumen/Lumen-0.4.1-mac.pkg',   10863651::bigint, 'Signed and notarized by Apple. Installs AAX (Pro Tools), VST3 and AU.'),
   ('chroma', 'mac',     'AAX · VST3 · AU', '0.1.5', 'macOS 11+ · Apple Silicon & Intel', '/files/chroma/Chroma-0.1.5-mac.pkg', 10400206::bigint, 'Signed and notarized by Apple. Installs AAX (Pro Tools), VST3 and AU.'),
-  ('chroma', 'windows', 'VST3', '0.1.5', 'Windows 10/11 · 64-bit', '/files/chroma/Chroma-0.1.5-Windows-Setup.exe', 4068645::bigint, 'Not signed yet: if Windows shows "Windows protected your PC", click More info, then Run anyway. AAX for Pro Tools on Windows coming soon.')
+  ('chroma', 'windows', 'VST3', '0.1.5', 'Windows 10/11 · 64-bit', '/files/chroma/Chroma-0.1.5-Windows-Setup.exe', 4068645::bigint, 'Not signed yet: if Windows shows "Windows protected your PC", click More info, then Run anyway. AAX for Pro Tools on Windows coming soon.'),
+  ('prism',  'mac',     'AAX · VST3 · AU', '1.0.0', 'macOS 11+ · Apple Silicon & Intel', '/files/prism/Prism-1.0.0-mac.pkg', 10701536::bigint, 'Signed and notarized by Apple. Installs AAX (Pro Tools), VST3 and AU.'),
+  ('prism',  'windows', 'VST3', '1.0.0', 'Windows 10/11 · 64-bit', '/files/prism/Prism-1.0.0-Windows-Setup.exe', 4095681::bigint, 'Not signed yet: if Windows shows "Windows protected your PC", click More info, then Run anyway. AAX for Pro Tools on Windows coming soon.')
 ) v(product_slug, platform, formats, version, min_os, public_url, size_bytes, note)
 where not exists (select 1 from public.downloads d where d.product_slug = v.product_slug and d.platform = v.platform);
