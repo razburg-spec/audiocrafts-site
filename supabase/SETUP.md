@@ -1,6 +1,6 @@
 # Accounts setup (Supabase)
 
-The site stays static. Accounts, the plugin library, iLok code pool and private
+The site stays static. Accounts, the plugin library, plugin activations and private
 installer storage live in a Supabase project. Until `js/config.js` has the
 project URL and anon key, `/account/` shows "Accounts are opening soon".
 
@@ -21,27 +21,25 @@ project URL and anon key, `/account/` shows "Accounts are opening soon".
   the public need custom SMTP.
 - Optional: email templates with the AudioCrafts name.
 
-## 3. iLok activation codes
-Generate a batch of activation codes per plugin in PACE Central (licence
-template: perpetual, 2 activations). Import them with the Table editor
-(`license_codes`, columns `product_slug`, `code`) or SQL:
+## 3. Plugin activation
+Plugins with `products.needs_activation = true` must be activated once per computer
+(max 2 per user per plugin):
+
+1. The plugin opens `/account/#activate=<slug>&m=<machine>&n=<computer name>&r=<nonce>`
+   (`m` is a hash of the device id, `r` a random nonce only the plugin knows).
+2. The signed-in user clicks Activate: `activation_approve` creates or reuses the
+   computer's row in `activations` and files the nonce in `activation_requests`.
+3. The plugin polls `activation_poll(nonce)` with the publishable key and receives
+   a secret token once. It re-checks with `activation_check(token, machine)` every
+   few days; removing the computer in My plugins (or deleting the account) makes
+   that return `ok: false` and the plugin asks to activate again.
+4. "Deactivate this computer" in the plugin calls `activation_release(token)`.
+
+Usage:
 
 ```sql
-insert into public.license_codes (product_slug, code)
-select 'lumen', unnest(array['CODE-1', 'CODE-2'])
-on conflict (code) do nothing;
-```
-
-Users who claimed while the pool was empty get a code automatically the next
-time they open My plugins.
-
-Pool status:
-
-```sql
-select product_slug,
-       count(*) filter (where assigned_to is null) as free,
-       count(*) as total
-from public.license_codes group by product_slug;
+select product_slug, count(*) as computers, count(distinct user_id) as users
+from public.activations group by product_slug;
 ```
 
 ## 4. Installers
