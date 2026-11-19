@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin · Raz Burg AudioCrafts</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/img/logo.svg">
+<style>
+@font-face{font-family:"Inter Tight";src:url(/fonts/inter-tight-latin.woff2) format("woff2");font-weight:300 800;font-display:swap}
+@font-face{font-family:"Inter";src:url(/fonts/inter-latin.woff2) format("woff2");font-weight:400 700;font-display:swap}
+:root{--bg:#0B0E13;--surface:#151B23;--raised:#1C242F;--line:#232C38;--grid:#1E2630;--text:#F2F5F9;--muted:#97A3B2;--faint:#5A6676;--display:#0C1016;--brand:#2A63E0;--blue:#6F9CFF;--cyan:#8DDCFF;--amber:#FFB45E;--violet:#B59CFF;--green:#5EE0A0;--red:#FF7A7A}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font:15px/1.55 "Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased;background-image:radial-gradient(ellipse 900px 520px at 50% -160px,rgba(42,99,224,.18),transparent 70%);background-repeat:no-repeat;min-height:100vh}
+a{color:var(--cyan);text-decoration:none}a:hover{text-decoration:underline}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px 80px}
+header{display:flex;align-items:center;justify-content:space-between;padding:22px 0;gap:16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px;color:var(--text)}.brand:hover{text-decoration:none}
+.brand img{width:34px;height:34px}
+.brand .name{font:700 14px/1.3 "Inter Tight","Inter",sans-serif;letter-spacing:.2em;text-transform:uppercase}
+.brand .name b{display:block;font:600 9.5px/1.3 "Inter",sans-serif;letter-spacing:.3em;color:var(--cyan);opacity:.85}
+.tag{font:700 10px/1 "Inter",sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);border:1px solid rgba(255,180,94,.45);background:rgba(255,180,94,.08);border-radius:999px;padding:5px 9px;margin-left:6px}
+.who{display:flex;align-items:center;gap:12px;font-size:13px;color:var(--muted);min-width:0}
+.who span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:240px}
+h1{font:700 clamp(26px,4vw,34px)/1.2 "Inter Tight","Inter",sans-serif;letter-spacing:-.025em;margin:18px 0 6px}
+h2{font:600 15px/1.3 "Inter Tight","Inter",sans-serif;letter-spacing:-.005em;margin-bottom:4px}
+.sub{color:var(--muted);font-size:13px}
+.btn{display:inline-block;border:0;cursor:pointer;padding:10px 18px;border-radius:6px;font:600 14px/1 "Inter",sans-serif;color:var(--text);background:var(--raised);border:1px solid var(--line)}
+.btn:hover{filter:brightness(1.15)}
+.btn.primary{background:var(--brand);border-color:var(--brand)}
+.btn.small{padding:7px 12px;font-size:12.5px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px 22px}
+.bar-top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+.seg{display:inline-flex;background:var(--display);border:1px solid var(--line);border-radius:8px;padding:3px}
+.seg button{white-space:nowrap;background:none;border:0;color:var(--muted);font:600 12.5px/1 "Inter",sans-serif;padding:8px 12px;border-radius:6px;cursor:pointer}
+.seg button.on{background:var(--raised);color:var(--text)}
+.tiles{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:22px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.tile .k{font-size:12px;color:var(--muted);margin-bottom:6px}
+.tile .v{font:700 28px/1.1 "Inter Tight","Inter",sans-serif;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.tile .d{font-size:12px;color:var(--faint);margin-top:6px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:22px}
+.row4{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-bottom:22px}
+.mb{margin-bottom:22px}
+.chead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.chart{position:relative}
+.chart svg{display:block;width:100%;height:220px;overflow:visible}
+.chart .axis{fill:var(--faint);font-size:11px;font-family:"Inter",sans-serif}
+.tip{position:absolute;pointer-events:none;background:var(--raised);border:1px solid var(--line);border-radius:8px;padding:7px 10px;font-size:12.5px;white-space:nowrap;transform:translate(-50%,-100%);display:none;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.tip b{font-variant-numeric:tabular-nums}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{text-align:left;font-weight:600;font-size:11.5px;color:var(--muted);padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+td:first-child{white-space:nowrap}
+td{padding:9px 10px;border-bottom:1px solid var(--grid);vertical-align:top}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+tr:last-child td{border-bottom:0}
+.scroll{overflow-x:auto}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:8px;vertical-align:1px}
+.list{display:grid;gap:8px}
+.li{display:grid;grid-template-columns:1fr auto;gap:2px 10px;font-size:13px}
+.li .lbl{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.li .num{color:var(--muted);font-variant-numeric:tabular-nums}
+.li .track{grid-column:1/-1;height:4px;background:var(--grid);border-radius:2px;overflow:hidden}
+.li .track i{display:block;height:100%;background:var(--blue);border-radius:2px}
+.empty{font-size:13px;color:var(--faint)}
+.chip{display:inline-block;font-size:11.5px;padding:2px 7px;border-radius:999px;border:1px solid var(--line);color:var(--muted);margin:0 4px 3px 0;white-space:nowrap}
+.ok{color:var(--green)}.no{color:var(--faint)}
+input[type=search],input[type=email],input[type=password]{background:var(--display);border:1px solid var(--line);border-radius:8px;padding:9px 12px;color:var(--text);font:inherit;font-size:14px}
+input:focus{outline:none;border-color:var(--blue)}
+.auth{max-width:380px;margin:60px auto 0}
+.auth label{display:block;font-size:13px;color:var(--muted);margin:14px 0 6px}
+.auth input{width:100%}
+.auth .btn{width:100%;margin-top:20px;padding:12px}
+.msg{font-size:13.5px;margin-top:14px;color:var(--red)}
+.center{text-align:center;color:var(--muted);margin-top:80px}
+.hidden{display:none!important}
+.foot{font-size:12px;color:var(--faint);margin-top:8px}
+@media (max-width:1000px){.tiles{grid-template-columns:repeat(3,1fr)}.row4{grid-template-columns:1fr 1fr}}
+@media (max-width:720px){.seg{flex-wrap:wrap}.seg button{padding:8px 9px}.tiles{grid-template-columns:1fr 1fr}.row2,.row4{grid-template-columns:1fr}.who span{display:none}.card{padding:16px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<a class="brand" href="/"><img src="/img/logo.svg" alt=""><div class="name">Raz Burg<b>AudioCrafts</b></div></a>
+<div class="who hidden" id="who"><span id="who-email"></span><button class="btn small" id="signout">Sign out</button></div>
+</header>
+
+<section id="v-load"><p class="center">Loading…</p></section>
+
+<section id="v-auth" class="hidden">
+<div class="card auth">
+<h2 style="font-size:20px">Admin sign in</h2>
+<p class="sub">Use your AudioCrafts site account.</p>
+<form id="f-auth">
+<label for="email">Email</label><input id="email" type="email" autocomplete="email" required>
+<label for="password">Password</label><input id="password" type="password" autocomplete="current-password" required>
+<button class="btn primary" type="submit">Sign in</button>
+<div class="msg" id="auth-msg"></div>
+</form>
+</div>
+</section>
+
+<section id="v-denied" class="hidden"><p class="center">This account does not have admin access.</p></section>
+
+<section id="v-dash" class="hidden">
+<div class="bar-top">
+<div><h1>Dashboard <span class="tag">Admin</span></h1><p class="sub" id="since"></p></div>
+<div class="seg" id="range"><button data-d="7">7 days</button><button data-d="30" class="on">30 days</button><button data-d="90">90 days</button><button data-d="365">1 year</button></div>
+</div>
+
+<div class="tiles" id="tiles"></div>
+
+<div class="card mb">
+<div class="chead">
+<div><h2 id="chart-title">Visitors per day</h2><p class="sub" id="chart-sub"></p></div>
+<div class="seg" id="metric"><button data-m="visitors" class="on">Visitors</button><button data-m="views">Page views</button><button data-m="signups">Sign-ups</button><button data-m="downloads">Downloads</button></div>
+</div>
+<div class="chart" id="chart"><svg id="svg" role="img" aria-label="Daily chart"></svg><div class="tip" id="tip"></div></div>
+</div>
+
+<div class="card mb">
+<div class="chead"><div><h2>Plugins</h2><p class="sub">Users who added each product, downloads in the period, and activated computers (active = checked in during the last 30 days).</p></div></div>
+<div class="scroll"><table id="t-products"></table></div>
+</div>
+
+<div class="row2">
+<div class="card"><div class="chead"><div><h2>Downloads by version</h2><p class="sub">In the selected period.</p></div></div><div class="scroll"><table id="t-dlv"></table></div></div>
+<div class="card"><div class="chead"><div><h2>Active installs by version</h2><p class="sub">Activated computers seen in the last 30 days. Version and OS appear once plugins report them.</p></div></div><div class="scroll"><table id="t-inv"></table></div></div>
+</div>
+
+<div class="row4">
+<div class="card"><h2>Top pages</h2><p class="sub" style="margin-bottom:12px">Page views</p><div class="list" id="l-pages"></div></div>
+<div class="card"><h2>Referrers</h2><p class="sub" style="margin-bottom:12px">Sites that sent visitors</p><div class="list" id="l-refs"></div></div>
+<div class="card"><h2>Countries</h2><p class="sub" style="margin-bottom:12px">Page views</p><div class="list" id="l-countries"></div></div>
+<div class="card"><h2>Devices</h2><p class="sub" style="margin-bottom:12px">Page views</p><div class="list" id="l-devices"></div></div>
+</div>
+
+<div class="card">
+<div class="chead"><div><h2>Registered users</h2><p class="sub" id="users-sub"></p></div><input type="search" id="q" placeholder="Search email or plugin"></div>
+<div class="scroll"><table id="t-users"></table></div>
+</div>
+<p class="foot">Days are counted in UTC. Visits are counted without cookies; bots are filtered out where they identify themselves.</p>
+</section>
+</div>
+
+<script src="/js/config.js"></script>
+<script src="/js/vendor/supabase-2.118.0.js"></script>
+<script>
+(function () {
+  "use strict";
+  var cfg = window.RBA_CONFIG || {};
+  var $ = function (id) { return document.getElementById(id); };
+  var VIEWS = ["v-load", "v-auth", "v-denied", "v-dash"];
+  function show(v) { VIEWS.forEach(function (x) { $(x).classList.toggle("hidden", x !== v); }); }
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  var nf = new Intl.NumberFormat("en-US");
+  function n(x) { return nf.format(x || 0); }
+  function date(s) { return s ? new Date(s).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) : "—"; }
+  function ago(s) {
+    if (!s) return "—";
+    var d = (Date.now() - new Date(s).getTime()) / 86400000;
+    return d < 1 ? "today" : d < 2 ? "yesterday" : Math.floor(d) + " days ago";
+  }
+  var ACCENT = { chroma: "var(--amber)", prism: "var(--violet)", lumen: "var(--cyan)", convert: "var(--blue)" };
+  var NAMES = {};
+  var regionNames = null;
+  try { regionNames = new Intl.DisplayNames(["en"], { type: "region" }); } catch (e) {}
+
+  var sb = window.supabase.createClient(cfg.supabaseUrl, cfg.supabaseAnonKey, { auth: { persistSession: true, autoRefreshToken: true } });
+  var days = 30, metric = "visitors", data = null, users = [];
+
+  async function start() {
+    var s = (await sb.auth.getSession()).data.session;
+    if (!s) { show("v-auth"); return; }
+    $("who").classList.remove("hidden");
+    $("who-email").textContent = s.user.email;
+    var ok = await sb.rpc("is_admin");
+    if (ok.error || ok.data !== true) { show("v-denied"); return; }
+    await load();
+  }
+
+  async function load() {
+    var r = await Promise.all([sb.rpc("admin_overview", { p_days: days }), users.length ? null : sb.rpc("admin_users")]);
+    if (r[0].error) { show("v-denied"); return; }
+    data = r[0].data;
+    if (r[1] && !r[1].error) users = r[1].data || [];
+    (data.products || []).forEach(function (p) { NAMES[p.slug] = p.name; });
+    show("v-dash");
+    render();
+  }
+
+  function tile(k, v, d) { return '<div class="tile"><div class="k">' + esc(k) + '</div><div class="v">' + v + '</div><div class="d">' + d + "</div></div>"; }
+
+  function render() {
+    var t = data.totals, per = days === 365 ? "1 year" : days + " days";
+    $("since").textContent = "Last " + per + ". Downloads counted since " + date(t.downloads_since) + ", visits since " + date(t.views_since) + ".";
+    $("tiles").innerHTML =
+      tile("Registered users", n(t.users), "+" + n(t.users_new) + " in " + per + " · " + n(t.users_confirmed) + " confirmed") +
+      tile("Signed in", n(t.active_users), "users active in " + per) +
+      tile("Downloads", n(t.downloads), n(t.downloads_all) + " all time") +
+      tile("Active computers", n(t.computers_active), "of " + n(t.computers) + " activated") +
+      tile("Visitors", n(t.visitors), "daily unique, summed") +
+      tile("Page views", n(t.views), per);
+    renderChart();
+
+    var ps = data.products || [];
+    $("t-products").innerHTML = "<tr><th>Product</th><th class='n'>Users</th><th class='n'>Downloads</th><th class='n'>Mac</th><th class='n'>Windows</th><th class='n'>All-time downloads</th><th class='n'>Active computers</th><th class='n'>Activated</th></tr>" +
+      ps.map(function (p) {
+        return "<tr><td><span class='dot' style='background:" + (ACCENT[p.slug] || "var(--muted)") + "'></span>" + esc(p.name) + "</td><td class='n'>" + n(p.users) + "</td><td class='n'>" + n(p.downloads) + "</td><td class='n'>" + n(p.downloads_mac) + "</td><td class='n'>" + n(p.downloads_win) + "</td><td class='n'>" + n(p.downloads_all) + "</td><td class='n'>" + (p.slug === "convert" ? "—" : n(p.computers_active)) + "</td><td class='n'>" + (p.slug === "convert" ? "—" : n(p.computers)) + "</td></tr>";
+      }).join("");
+
+    var dv = data.download_versions || [];
+    $("t-dlv").innerHTML = dv.length ? "<tr><th>Product</th><th>Version</th><th>Platform</th><th class='n'>Downloads</th></tr>" + dv.map(function (x) {
+      return "<tr><td>" + esc(NAMES[x.product] || x.product) + "</td><td>" + esc(x.version || "—") + "</td><td>" + esc(x.platform === "mac" ? "Mac" : x.platform === "windows" ? "Windows" : x.platform) + "</td><td class='n'>" + n(x.count) + "</td></tr>";
+    }).join("") : "<tr><td class='empty'>No downloads in this period yet.</td></tr>";
+
+    var iv = data.install_versions || [];
+    $("t-inv").innerHTML = iv.length ? "<tr><th>Product</th><th>Version</th><th>OS</th><th class='n'>Computers</th></tr>" + iv.map(function (x) {
+      return "<tr><td>" + esc(NAMES[x.product] || x.product) + "</td><td>" + esc(x.version) + "</td><td>" + esc(x.os === "mac" ? "Mac" : x.os === "windows" ? "Windows" : x.os) + "</td><td class='n'>" + n(x.count) + "</td></tr>";
+    }).join("") : "<tr><td class='empty'>No active installs yet.</td></tr>";
+
+    list("l-pages", data.pages, function (k) { return k; });
+    list("l-refs", data.referrers, function (k) { return k; });
+    list("l-countries", data.countries, function (k) { try { return regionNames ? regionNames.of(k) : k; } catch (e) { return k; } });
+    list("l-devices", data.devices, function (k) { return k === "mobile" ? "Phone / tablet" : "Computer"; });
+    renderUsers();
+  }
+
+  function list(id, rows, label) {
+    rows = rows || [];
+    if (!rows.length) { $(id).innerHTML = "<p class='empty'>No data yet.</p>"; return; }
+    var max = rows[0].count || 1;
+    $(id).innerHTML = rows.slice(0, 10).map(function (r) {
+      return "<div class='li'><span class='lbl' title='" + esc(r.key) + "'>" + esc(label(r.key)) + "</span><span class='num'>" + n(r.count) + "</span><span class='track'><i style='width:" + Math.max(2, r.count / max * 100) + "%'></i></span></div>";
+    }).join("");
+  }
+
+  var TITLES = { visitors: "Visitors per day", views: "Page views per day", signups: "Sign-ups per day", downloads: "Downloads per day" };
+  function renderChart() {
+    var s = data.series || [], svg = $("svg"), W = svg.clientWidth || 800, H = 220, padL = 34, padB = 22, padT = 8;
+    $("chart-title").textContent = TITLES[metric];
+    var total = s.reduce(function (a, d) { return a + (d[metric] || 0); }, 0);
+    $("chart-sub").textContent = n(total) + " in total";
+    var max = Math.max(1, Math.max.apply(null, s.map(function (d) { return d[metric] || 0; })));
+    var step = Math.pow(10, Math.floor(Math.log10(max))), nice = Math.ceil(max / step) * step;
+    if (nice / step <= 2) step = step / 2;
+    var ticks = []; for (var v = 0; v <= nice + 1e-9; v += step) ticks.push(v);
+    if (ticks.length < 2) ticks = [0, nice];
+    var top = ticks[ticks.length - 1];
+    var plotW = W - padL, plotH = H - padB - padT, bw = plotW / Math.max(1, s.length), gap = Math.min(2, bw * 0.2), barW = Math.max(1, bw - gap);
+    var y = function (val) { return padT + plotH - (val / top) * plotH; };
+    var out = [];
+    ticks.forEach(function (tv) {
+      out.push("<line x1='" + padL + "' x2='" + W + "' y1='" + y(tv) + "' y2='" + y(tv) + "' stroke='var(--grid)' stroke-width='1'/>");
+      out.push("<text class='axis' x='" + (padL - 8) + "' y='" + (y(tv) + 4) + "' text-anchor='end'>" + n(tv) + "</text>");
+    });
+    var everyN = Math.ceil(s.length / Math.max(2, Math.floor(plotW / 70)));
+    s.forEach(function (d, i) {
+      var val = d[metric] || 0, x = padL + i * bw + gap / 2, h = Math.max(0, y(0) - y(val)), r = Math.min(4, barW / 2, h);
+      if (val > 0) {
+        // rounded top, square base
+        out.push("<path d='M" + x + "," + y(0) + " V" + (y(val) + r) + " Q" + x + "," + y(val) + " " + (x + r) + "," + y(val) + " H" + (x + barW - r) + " Q" + (x + barW) + "," + y(val) + " " + (x + barW) + "," + (y(val) + r) + " V" + y(0) + " Z' fill='var(--blue)'/>");
+      }
+      out.push("<rect data-i='" + i + "' x='" + (padL + i * bw) + "' y='" + padT + "' width='" + bw + "' height='" + plotH + "' fill='transparent'/>");
+      if (i % everyN === 0) out.push("<text class='axis' x='" + (x + barW / 2) + "' y='" + (H - 4) + "' text-anchor='middle'>" + new Date(d.day + "T00:00:00Z").toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "UTC" }) + "</text>");
+    });
+    svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+    svg.setAttribute("preserveAspectRatio", "none");
+    svg.innerHTML = out.join("");
+    var tip = $("tip");
+    svg.onmousemove = function (e) {
+      var i = e.target.getAttribute && e.target.getAttribute("data-i");
+      if (i == null) { tip.style.display = "none"; return; }
+      var d = s[+i], val = d[metric] || 0;
+      tip.innerHTML = new Date(d.day + "T00:00:00Z").toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" }) + "<br><b>" + n(val) + "</b> " + TITLES[metric].replace(" per day", "").toLowerCase();
+      tip.style.display = "block";
+      tip.style.left = (padL + (+i + 0.5) * bw) / W * svg.clientWidth + "px";
+      tip.style.top = (y(val) - 6) / H * svg.clientHeight + "px";
+    };
+    svg.onmouseleave = function () { tip.style.display = "none"; };
+  }
+
+  function renderUsers() {
+    var q = $("q").value.trim().toLowerCase();
+    var rows = users.filter(function (u) {
+      return !q || (u.email || "").toLowerCase().indexOf(q) >= 0 || (u.plugins || []).join(" ").indexOf(q) >= 0;
+    });
+    $("users-sub").textContent = n(users.length) + " accounts" + (q ? " · " + n(rows.length) + " match" : "") + ", newest first.";
+    $("t-users").innerHTML = "<tr><th>Email</th><th>Signed up</th><th>Last sign-in</th><th>Confirmed</th><th>Plugins</th><th>Computers</th><th class='n'>Downloads</th></tr>" +
+      (rows.length ? rows.slice(0, 500).map(function (u) {
+        var pcs = (u.computers || []).map(function (c) {
+          return "<span class='chip' title='Last seen " + esc(ago(c.last_seen)) + (c.version ? " · v" + esc(c.version) : "") + "'>" + esc(NAMES[c.product] || c.product) + ": " + esc(c.name || "Computer") + "</span>";
+        }).join("");
+        return "<tr><td>" + esc(u.email) + "</td><td>" + date(u.created_at) + "</td><td>" + ago(u.last_sign_in_at) + "</td><td>" + (u.confirmed ? "<span class='ok'>Yes</span>" : "<span class='no'>No</span>") + "</td><td>" +
+          ((u.plugins || []).map(function (p) { return "<span class='chip'>" + esc(NAMES[p] || p) + "</span>"; }).join("") || "<span class='no'>—</span>") + "</td><td>" + (pcs || "<span class='no'>—</span>") + "</td><td class='n'>" + n(u.downloads) + "</td></tr>";
+      }).join("") : "<tr><td class='empty' colspan='7'>No matching users.</td></tr>");
+  }
+
+  $("range").addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    this.querySelectorAll("button").forEach(function (x) { x.classList.toggle("on", x === b); });
+    days = +b.dataset.d; load();
+  });
+  $("metric").addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    this.querySelectorAll("button").forEach(function (x) { x.classList.toggle("on", x === b); });
+    metric = b.dataset.m; renderChart();
+  });
+  $("q").addEventListener("input", renderUsers);
+  var rt; window.addEventListener("resize", function () { clearTimeout(rt); rt = setTimeout(function () { if (data) renderChart(); }, 150); });
+  $("signout").addEventListener("click", async function () { await sb.auth.signOut(); location.reload(); });
+  $("f-auth").addEventListener("submit", async function (e) {
+    e.preventDefault();
+    $("auth-msg").textContent = "";
+    var r = await sb.auth.signInWithPassword({ email: $("email").value.trim(), password: $("password").value });
+    if (r.error) { $("auth-msg").textContent = r.error.message; return; }
+    start();
+  });
+  start();
+})();
+</script>
+</body>
+</html>

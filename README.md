@@ -5,6 +5,7 @@ Static site for https://audiocrafts.razburg.com, deployed by Netlify on every pu
 - `index.html`: landing page (Lumen, Chroma, Convert)
 - `lumen/manual/`, `chroma/manual/`: web user guides (generated in the plugin repos)
 - `img/`: screenshots and logo
+- `admin/`: private stats dashboard (admins only, enforced in the database; see `supabase/SETUP.md` §6)
 
 ## Accounts
 Sign up / sign in and the My plugins library live at `/account/` (Supabase auth,

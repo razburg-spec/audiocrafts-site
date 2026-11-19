@@ -50,6 +50,16 @@ export async function onRequest(context) {
   }
   if (!Array.isArray(rows) || rows.length === 0) return deny();
 
+  // Count the download for the admin dashboard (skip resumed / partial requests).
+  const range = request.headers.get("range") || "";
+  if (request.method === "GET" && (!range || /^bytes=0-/.test(range))) {
+    context.waitUntil(fetch(SUPABASE_URL + "/rest/v1/rpc/log_download", {
+      method: "POST",
+      headers: { apikey: SUPABASE_ANON_KEY, Authorization: "Bearer " + decodeURIComponent(m[1]), "Content-Type": "application/json" },
+      body: JSON.stringify({ p_path: url.pathname }),
+    }).catch(() => {}));
+  }
+
   if (LARGE.has(url.pathname)) {
     return new Response(null, { status: 302, headers: { Location: RAW + url.pathname, "Cache-Control": "private, no-store" } });
   }
