@@ -174,8 +174,8 @@ on conflict (slug) do update
 
 insert into public.downloads (product_slug, platform, formats, version, min_os, public_url, size_bytes, note)
 select * from (values
-  ('convert', 'mac',     'App', '0.1.0', 'macOS 11+ · Apple Silicon', '/files/convert/Convert_0.1.0_aarch64.dmg',   26036048::bigint, 'Signed and notarized by Apple.'),
-  ('convert', 'windows', 'App', '0.1.0', 'Windows 10/11 · x64',       '/files/convert/Convert_0.1.0_x64-setup.exe', 88489556::bigint, 'If Windows warns on first launch, click More info, then Run anyway.')
+  ('convert', 'mac',     'App', '0.1.1', 'macOS 11+ · Apple Silicon', '/files/convert/Convert_0.1.1_aarch64.dmg',   25616334::bigint, 'Signed and notarized by Apple.'),
+  ('convert', 'windows', 'App', '0.1.1', 'Windows 10/11 · x64',       '/files/convert/Convert_0.1.1_x64-setup.exe', 89639510::bigint, 'If Windows warns on first launch, click More info, then Run anyway.')
 ) v(product_slug, platform, formats, version, min_os, public_url, size_bytes, note)
 where not exists (select 1 from public.downloads d where d.product_slug = 'convert');
 

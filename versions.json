@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "updated": "2026-11-17",
+  "updated": "2026-11-19",
   "products": {
     "lumen": {
       "name": "Lumen",
@@ -20,11 +20,11 @@
     },
     "convert": {
       "name": "Convert",
-      "latest": "0.1.0",
-      "released": "2026-11-08",
+      "latest": "0.1.1",
+      "released": "2026-11-19",
       "download_url": "https://audiocrafts.razburg.com/account/#claim=convert",
       "notes_url": "https://audiocrafts.razburg.com/#convert",
-      "notes": "First public release."
+      "notes": "New footer tagline."
     }
   }
 }
