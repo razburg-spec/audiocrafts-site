@@ -108,7 +108,7 @@ h1{font-weight:700!important;letter-spacing:-.025em}
 <!-- Accounts not configured yet -->
 <section id="v-soon" class="hidden">
 <h1>Accounts are opening soon</h1>
-<p class="lead">Soon you will be able to create a free account here, add any Raz Burg AudioCrafts plugin to your library and download the installers. Lumen, Chroma and Convert will all be free.</p>
+<p class="lead">Soon you will be able to create a free account here, add any Raz Burg AudioCrafts plugin to your library and download the installers. Chroma, Lumen and Convert will all be free.</p>
 </section>
 
 <!-- Signed out -->
@@ -188,7 +188,7 @@ h1{font-weight:700!important;letter-spacing:-.025em}
   function clearMsg(el) { el.className = "msg"; el.textContent = ""; }
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
   function mb(n) { return n ? (n / 1048576).toFixed(0) + " MB" : ""; }
-  var ACCENT = { lumen: "var(--cyan)", chroma: "var(--amber)", convert: "var(--blue)" };
+  var ACCENT = { chroma: "var(--amber)", prism: "var(--violet)", lumen: "var(--cyan)", convert: "var(--blue)" };
 
   if (!cfg.supabaseUrl || !cfg.supabaseAnonKey || !window.supabase) { show("v-soon"); return; }
 
