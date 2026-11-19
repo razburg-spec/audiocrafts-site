@@ -258,9 +258,9 @@ create policy "claimed users read installers" on storage.objects
 -- ── Seed data ────────────────────────────────────────────────────────────
 
 insert into public.products (slug, name, tagline, needs_ilok, needs_activation, sort) values
-  ('lumen',   'Lumen',   'Reverb · Delay · Shimmer',          false, true,  1),
-  ('chroma',  'Chroma',  'Multi-character compressor',        false, true,  2),
-  ('convert', 'Convert', 'Media converter · no licence needed', false, false, 3)
+  ('chroma',  'Chroma',  'Multi-character compressor',        false, true,  1),
+  ('lumen',   'Lumen',   'Reverb · Delay · Shimmer',          false, true,  3),
+  ('convert', 'Convert', 'Media converter · no licence needed', false, false, 4)
 on conflict (slug) do update
   set name = excluded.name, tagline = excluded.tagline, needs_ilok = excluded.needs_ilok,
       needs_activation = excluded.needs_activation, sort = excluded.sort;
