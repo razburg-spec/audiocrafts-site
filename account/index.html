@@ -206,9 +206,13 @@ h1{font-weight:700!important;letter-spacing:-.025em}
   // A plugin asking to be activated opens /account/#activate=<slug>&m=<machine>&n=<name>&r=<nonce>.
   // Kept in localStorage for 30 minutes so it survives the sign-up confirmation email opening a new tab.
   var ACT_KEY = "rba-activate";
-  var am = location.hash.match(/activate=([a-z0-9-]+)/);
+  // Plugins up to Lumen 0.4.1 / Chroma 0.1.5 open the link with the whole fragment
+  // percent-encoded (activate%3Dlumen%26m%3D...), so decode it before parsing.
+  var rawHash = location.hash.slice(1);
+  if (/^activate%3D/i.test(rawHash)) { try { rawHash = decodeURIComponent(rawHash); } catch (e) {} }
+  var am = rawHash.match(/^activate=([a-z0-9-]+)/);
   if (am) {
-    var hp = new URLSearchParams(location.hash.slice(1));
+    var hp = new URLSearchParams(rawHash);
     var req = { slug: am[1], machine: hp.get("m") || "", name: hp.get("n") || "", nonce: hp.get("r") || "", at: Date.now() };
     if (/^[A-Za-z0-9]{16,128}$/.test(req.machine) && /^[A-Za-z0-9]{32,128}$/.test(req.nonce)) {
       try { localStorage.setItem(ACT_KEY, JSON.stringify(req)); } catch (e) {}
