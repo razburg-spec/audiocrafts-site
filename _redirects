@@ -2,5 +2,9 @@
 /download/convert-windows  /account/#claim=convert  302
 /files/convert/Convert_0.1.0_aarch64.dmg   /files/convert/Convert_0.1.1_aarch64.dmg   301
 /files/convert/Convert_0.1.0_x64-setup.exe /files/convert/Convert_0.1.1_x64-setup.exe 301
-/files/lumen/Lumen-0.3.1-Windows-Setup.exe   /files/lumen/Lumen-0.4.0-Windows-Setup.exe   301
-/files/chroma/Chroma-0.1.3-Windows-Setup.exe /files/chroma/Chroma-0.1.4-Windows-Setup.exe 301
+/files/lumen/Lumen-0.3.1-Windows-Setup.exe   /files/lumen/Lumen-0.4.1-Windows-Setup.exe   301
+/files/lumen/Lumen-0.4.0-Windows-Setup.exe   /files/lumen/Lumen-0.4.1-Windows-Setup.exe   301
+/files/chroma/Chroma-0.1.3-Windows-Setup.exe /files/chroma/Chroma-0.1.5-Windows-Setup.exe 301
+/files/chroma/Chroma-0.1.4-Windows-Setup.exe /files/chroma/Chroma-0.1.5-Windows-Setup.exe 301
+/files/lumen/Lumen-0.3.1-mac.pkg   /files/lumen/Lumen-0.4.1-mac.pkg   301
+/files/chroma/Chroma-0.1.3-mac.pkg /files/chroma/Chroma-0.1.5-mac.pkg 301

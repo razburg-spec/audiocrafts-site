@@ -4,19 +4,19 @@
   "products": {
     "lumen": {
       "name": "Lumen",
-      "latest": "0.3.1",
-      "released": "2026-11-17",
+      "latest": "0.4.1",
+      "released": "2026-11-19",
       "download_url": "https://audiocrafts.razburg.com/account/#claim=lumen",
       "notes_url": "https://audiocrafts.razburg.com/lumen/manual/",
-      "notes": "First public release: VST3, AU and AAX for Mac."
+      "notes": "Rebuilt shimmer inside the reverb. Activate with your free AudioCrafts account (2 computers)."
     },
     "chroma": {
       "name": "Chroma",
-      "latest": "0.1.3",
-      "released": "2026-11-17",
+      "latest": "0.1.5",
+      "released": "2026-11-19",
       "download_url": "https://audiocrafts.razburg.com/account/#claim=chroma",
       "notes_url": "https://audiocrafts.razburg.com/chroma/manual/",
-      "notes": "Saturation and Parallel are now separate controls."
+      "notes": "Activate with your free AudioCrafts account (2 computers)."
     },
     "convert": {
       "name": "Convert",

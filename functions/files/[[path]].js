@@ -11,8 +11,12 @@ const SUPABASE_ANON_KEY = "sb_publishable_2AvUWy3rpblb4qEOgNutVw_4Gfx197l";
 const MOVED = {
   "/files/convert/Convert_0.1.0_aarch64.dmg": "/files/convert/Convert_0.1.1_aarch64.dmg",
   "/files/convert/Convert_0.1.0_x64-setup.exe": "/files/convert/Convert_0.1.1_x64-setup.exe",
-  "/files/lumen/Lumen-0.3.1-Windows-Setup.exe": "/files/lumen/Lumen-0.4.0-Windows-Setup.exe",
-  "/files/chroma/Chroma-0.1.3-Windows-Setup.exe": "/files/chroma/Chroma-0.1.4-Windows-Setup.exe",
+  "/files/lumen/Lumen-0.3.1-Windows-Setup.exe": "/files/lumen/Lumen-0.4.1-Windows-Setup.exe",
+  "/files/lumen/Lumen-0.4.0-Windows-Setup.exe": "/files/lumen/Lumen-0.4.1-Windows-Setup.exe",
+  "/files/chroma/Chroma-0.1.3-Windows-Setup.exe": "/files/chroma/Chroma-0.1.5-Windows-Setup.exe",
+  "/files/chroma/Chroma-0.1.4-Windows-Setup.exe": "/files/chroma/Chroma-0.1.5-Windows-Setup.exe",
+  "/files/lumen/Lumen-0.3.1-mac.pkg": "/files/lumen/Lumen-0.4.1-mac.pkg",
+  "/files/chroma/Chroma-0.1.3-mac.pkg": "/files/chroma/Chroma-0.1.5-mac.pkg",
 };
 
 // Files over Cloudflare Pages' 25 MiB limit are left out of the build
