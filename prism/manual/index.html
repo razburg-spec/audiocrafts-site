@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Prism User Guide · Raz Burg AudioCrafts</title>
+<meta name="description" content="User guide for Prism, the multi-character EQ plugin by Raz Burg AudioCrafts.">
+<link rel="icon" href="../../img/logo.svg">
+<style>
+:root{--bg:#11161D;--surface:#19212B;--line:#2B3542;--text:#F2F5F9;--muted:#97A3B2;--faint:#4A5666;--blue:#6F9CFF;--cyan:#B9A2FF}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--muted);font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif}
+header{display:flex;align-items:center;gap:12px;padding:18px 24px;border-bottom:1px solid var(--line)}
+header a{color:var(--text);text-decoration:none;display:flex;align-items:center;gap:12px;font-weight:600;letter-spacing:.08em}
+header img{width:32px;height:32px}header .back{margin-left:auto;color:var(--cyan);font-weight:500;letter-spacing:0;font-size:14px}
+.wrap{max-width:1080px;margin:0 auto;padding:32px 24px 80px;display:grid;grid-template-columns:220px 1fr;gap:48px}
+nav{position:sticky;top:24px;align-self:start;display:flex;flex-direction:column;gap:6px;font-size:14px}
+nav a{color:var(--muted);text-decoration:none}nav a:hover{color:var(--cyan)}
+main{min-width:0}h1{color:var(--text);font-size:34px;margin:0 0 12px}
+h2{color:var(--cyan);font-size:13px;letter-spacing:.16em;text-transform:uppercase;margin:40px 0 10px;padding-top:18px;border-top:1px solid var(--line)}
+b{color:var(--text);font-weight:600}ul{padding-left:20px}li{margin:6px 0}li::marker{color:var(--cyan)}
+.shot{width:100%;border-radius:12px;border:1px solid var(--line);margin:18px 0 6px}
+@media (max-width:760px){.wrap{grid-template-columns:1fr;gap:16px}nav{position:static;flex-direction:row;flex-wrap:wrap;gap:6px 14px}}
+main a{color:var(--cyan)}</style></head><body>
+<header><a href="../../"><img src="../../img/logo.svg" alt="">RAZ BURG AUDIOCRAFTS</a><a class="back" href="../../prism/">Back to Prism</a></header>
+<div class="wrap"><nav><a href="#modes">Modes</a><a href="#the-display">The display</a><a href="#working-on-the-graph">Working on the graph</a><a href="#listening-to-one-band">Listening to one band</a><a href="#linear-phase">Linear Phase</a><a href="#bands">Bands</a><a href="#output">Output</a><a href="#tips">Tips</a><a href="#general">General</a><a href="#licence">Licence</a><a href="#updates">Updates</a></nav><main>
+<img class="shot" src="../../img/prism.jpg" alt="Prism plugin window">
+<h1>Prism User Guide</h1>
+<p>Prism is a six-band EQ with six characters. The controls are the same in every mode, so you can switch modes freely and hear how the same curve sounds in a different voice.</p>
+<h2 id="modes">Modes</h2>
+<ul>
+<li><b>Vintage:</b> passive tube warmth. Very broad, gentle curves. A low-shelf boost also scoops the muddy low mids just above it, the classic way to get deep lows without boom. High boosts are broad, sweet resonant peaks that keep the very top lifted (the High band in Shelf mode becomes that peak), and high cuts are wide and gentle.</li>
+<li><b>Retro:</b> 70s console silk. Bells start wide at small settings and get narrower the more you boost or cut. Sweet, forward mids and slightly resonant filter corners.</li>
+<li><b>Chubby:</b> class-A iron. Broad musical bells, a resonant low shelf (a bump below the corner and a small dip above it), soft filter corners and heavy transformer weight when driven.</li>
+<li><b>Indie:</b> large-format console bite. Tighter bells, shelves with overshoot and undershoot, and a gritty edge when driven.</li>
+<li><b>Modern:</b> clean and exact. What you draw is what you get, with an open top end and no added color.</li>
+<li><b>Bus:</b> mastering polish. Smooth, wide curves, shelves with no overshoot, gentle air and subtle harmonic glue.</li>
+</ul>
+<h2 id="the-display">The display</h2>
+<ul>
+<li>The gray spectrum is your source before the EQ; the colored spectrum is the result after it. Choose PRE + POST, POST or OFF at the top left.</li>
+<li>The white line is the full EQ curve; each band's own curve is shaded in its color.</li>
+</ul>
+<h2 id="working-on-the-graph">Working on the graph</h2>
+<p>Everything can be done right on the graph. The mouse works the way most pro EQs do:</p>
+<p><b>Dragging</b></p>
+<ul>
+<li><b>Drag a point:</b> frequency and gain together. On a cut (no gain), up and down sets the corner resonance (Q).</li>
+<li><b>Shift-drag:</b> fine adjustment.</li>
+<li><b>Option/Alt-drag:</b> one axis only (frequency or gain), whichever way you move first.</li>
+<li><b>Cmd/Ctrl + drag up or down:</b> Q (up = narrower, down = wider).</li>
+<li><b>Drag the two small width dots beside a selected bell:</b> set its width directly.</li>
+<li>You can press or release Shift and Cmd/Ctrl during a drag; the point continues smoothly.</li>
+</ul>
+<p><b>Scrolling over a point</b></p>
+<ul>
+<li><b>Scroll:</b> Q. On a cut: the slope (12, 24, 36, 48 dB/oct).</li>
+<li><b>Cmd/Ctrl + scroll:</b> gain.</li>
+<li><b>Shift + scroll:</b> fine.</li>
+</ul>
+<p><b>Clicking</b></p>
+<ul>
+<li><b>Click a point:</b> select it. Cmd/Ctrl-click: add or remove it from the selection. Shift-click: select every band in between.</li>
+<li><b>Drag on an empty area:</b> draw a box to select several bands. Moving one selected point then moves them all.</li>
+<li><b>Option/Alt-click a point:</b> switch the band on or off.</li>
+<li><b>Cmd/Ctrl + Option/Alt-click:</b> Low or High band: Cut or Shelf.</li>
+<li><b>Option/Alt + Shift-click:</b> next cut slope.</li>
+<li><b>Double-click a point:</b> type its values. Tab steps through Frequency, Gain and Q; Return confirms, Esc cancels. Frequencies can be typed as 2.5k.</li>
+<li>Click an empty spot with nothing selected (or double-click / Cmd-Ctrl-click it anytime): brings a free band there. Click an empty spot while bands are selected: deselect.</li>
+<li><b>Right-click a point:</b> band menu (On, Cut or Shelf, slope, Type values, Reset band). Right-click an empty spot: select all, all bands off, reset all bands.</li>
+</ul>
+<h2 id="listening-to-one-band">Listening to one band</h2>
+<ul>
+<li><b>Hover a point:</b> its values appear in a small box with a speaker button.</li>
+<li><b>Press and hold the speaker:</b> you hear only the part of the sound that band works on. A bell plays the range around its frequency (narrower with higher Q); the Low band plays everything below its corner and the High band everything above it (for a cut, exactly what it removes).</li>
+<li>While holding, drag sideways to sweep the band's frequency and up or down to set the listening level. Let go to return to the full sound.</li>
+</ul>
+<h2 id="linear-phase">Linear Phase</h2>
+<ul>
+<li>Switch Linear Phase at the top right of the display. The EQ then shifts no phase at all: the same curve, with every frequency kept perfectly in time. Use it on the mix bus and in mastering, or on one of several tracks that share a source (drums, layered parts).</li>
+<li>Linear Phase adds about 100 ms of latency at 44.1 or 48 kHz; the host compensates for it automatically. Very steep cuts below about 40 Hz are a little gentler than in normal mode.</li>
+<li>With Linear Phase off, Prism has zero latency.</li>
+</ul>
+<h2 id="bands">Bands</h2>
+<ul>
+<li><b>Low:</b> Cut (12, 24, 36 or 48 dB per octave) or Shelf. In Cut mode Q adds resonance at the corner; in Shelf mode it shapes the shelf.</li>
+<li><b>Band 1 to Band 4:</b> bells from 20 Hz to 20 kHz, plus or minus 18 dB, Q from 0.1 (very wide) to 18 (very narrow).</li>
+<li><b>High:</b> Cut or Shelf, like the Low band.</li>
+</ul>
+<h2 id="output">Output</h2>
+<ul>
+<li><b>Drive:</b> pushes the analog stage of the selected mode: harmonics, transformer weight and softness. At 0 the path is completely clean.</li>
+<li><b>Output:</b> overall level, plus or minus 18 dB.</li>
+</ul>
+<h2 id="tips">Tips</h2>
+<ul>
+<li><b>Vocals:</b> Low Cut at 80 to 100 Hz, a small cut around 300 Hz, a little presence at 3 to 5 kHz, air with a High Shelf.</li>
+<li><b>Kick:</b> Low Shelf for weight, cut the box around 300 to 400 Hz, a narrow boost at 3 to 4 kHz for the beater.</li>
+<li><b>Mix bus:</b> Bus mode, gentle shelves of 1 to 2 dB, a touch of Drive.</li>
+</ul>
+<h2 id="general">General</h2>
+<ul>
+<li>Prism opens flat and passes the audio untouched. Reset returns to that state.</li>
+<li>Undo and Redo keep up to 100 steps. Double-click a knob to reset it.</li>
+<li>Zero latency (unless Linear Phase is on).</li>
+<li>Sessions saved with any earlier version of Prism open exactly as they were saved.</li>
+</ul>
+<h2 id="licence">Licence</h2>
+<ul>
+<li>Prism is free. Get it from My plugins at <a href="../../account/">audiocrafts.razburg.com</a>, with your free site account.</li>
+<li>The first time you open Prism, click Activate in browser. Your browser opens My plugins: sign in and click Activate there, and Prism unlocks by itself a few seconds later. No licence key, no iLok.</li>
+<li>Each account can activate Prism on up to two computers. To move it, click the ACTIVATED badge and choose Deactivate this computer, or remove the computer in My plugins.</li>
+<li>Prism checks its activation online about once a week. Offline is fine for up to 60 days. Until Prism is activated, the effect drops out for a moment every 40 seconds.</li>
+</ul>
+<h2 id="updates">Updates</h2>
+<p>When you open Prism, it quietly checks audiocrafts.razburg.com for a newer version. If there is one, a small notice appears at the bottom right of the window. Click Download to open My plugins in your browser, or click the x to hide the notice until the next release. The check never affects the sound, and nothing appears when you are offline.</p>
+</main></div>
+</body></html>
