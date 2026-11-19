@@ -70,3 +70,23 @@ GitHub; make the repo private to close that.
   subjects in `subjects.json`. Links go to `{{ .SiteURL }}?token_hash=...&type=...`, so
   every link in the email stays on audiocrafts.razburg.com (better for spam filters);
   `/account/` verifies the token with `verifyOtp`.
+
+## 6. Admin dashboard (/admin/)
+`/admin/` shows registered users, plugins added, activated computers, downloads
+(per product, version and OS), page views and visitors. Data comes from the
+`admin_overview` and `admin_users` functions, which raise `not_admin` unless the
+signed-in user is in `public.admins`; the page itself holds no data.
+
+- Downloads are logged by the `/files/*` gate (`log_download`, with the user's token).
+- Page views come from `js/hit.js` → `functions/api/hit.js` → `log_visit`. No cookies;
+  IP + user agent are hashed with a daily random salt (deleted the next day) only to
+  count unique visitors per day.
+- Plugins can send `p_version` ('1.2.3') and `p_os` ('mac' | 'windows') in
+  `activation_check`; older plugins that send only token + machine keep working.
+
+Add an admin (SQL editor; do not commit emails to this public repo):
+
+```sql
+insert into public.admins (user_id) select id from auth.users where email = '<email>'
+on conflict do nothing;
+```

@@ -189,16 +189,7 @@ begin
   return jsonb_build_object('token', v_token, 'email', v_email);
 end $$;
 
--- Called by the plugin now and then: is this computer still activated?
--- false once the user removed it in My plugins or deleted the account.
-create or replace function public.activation_check(p_token text, p_machine text)
-returns jsonb
-language plpgsql security definer set search_path = public
-as $$
-begin
-  update activations set last_seen = now() where token = p_token and machine_id = p_machine;
-  return jsonb_build_object('ok', found);
-end $$;
+-- activation_check (the weekly "still activated?" call) is defined in the stats section below.
 
 -- Called by the plugin's "Deactivate this computer" button.
 create or replace function public.activation_release(p_token text)
@@ -228,11 +219,9 @@ grant execute on function public.my_plugins()        to authenticated;
 grant execute on function public.delete_my_account() to authenticated;
 revoke all on function public.activation_approve(text, text, text, text) from public, anon;
 revoke all on function public.activation_poll(text)          from public;
-revoke all on function public.activation_check(text, text)   from public;
 revoke all on function public.activation_release(text)       from public;
 grant execute on function public.activation_approve(text, text, text, text) to authenticated;
 grant execute on function public.activation_poll(text)        to anon, authenticated;
-grant execute on function public.activation_check(text, text) to anon, authenticated;
 grant execute on function public.activation_release(text)     to anon, authenticated;
 
 -- ── Private installer storage ────────────────────────────────────────────
@@ -254,6 +243,246 @@ create policy "claimed users read installers" on storage.objects
         and c.product_slug = (storage.foldername(name))[1]
     )
   );
+
+-- ── Site stats and the /admin dashboard ─────────────────────────────────
+create extension if not exists pgcrypto with schema extensions;
+
+-- Safe to re-run. After the first run, make your own account an admin:
+--   insert into public.admins (user_id) select id from auth.users where email = '<your sign-in email>'
+--   on conflict do nothing;
+
+-- Who can open /admin. Empty by default; no API access at all.
+create table if not exists public.admins (
+  user_id  uuid primary key references auth.users(id) on delete cascade,
+  added_at timestamptz not null default now()
+);
+alter table public.admins enable row level security;
+revoke all on public.admins from anon, authenticated;
+
+create or replace function public.is_admin()
+returns boolean
+language sql stable security definer set search_path = public
+as $$ select exists (select 1 from admins where user_id = auth.uid()); $$;
+
+-- One row per installer download that passed the /files/* gate.
+create table if not exists public.download_events (
+  id            bigint generated always as identity primary key,
+  at            timestamptz not null default now(),
+  user_id       uuid references auth.users(id) on delete set null,
+  product_slug  text not null,
+  platform      text not null,   -- mac | windows | other
+  version       text not null default '',
+  path          text not null
+);
+create index if not exists download_events_at on public.download_events (at);
+alter table public.download_events enable row level security;
+revoke all on public.download_events from anon, authenticated;
+
+-- Page views from the site's cookieless beacon (/api/hit). No IP or user agent is
+-- stored: "visitor" is a hash of them with a random salt that changes every day
+-- and is then deleted, so visitors can be counted per day but never followed.
+create table if not exists public.page_views (
+  id        bigint generated always as identity primary key,
+  at        timestamptz not null default now(),
+  path      text not null,
+  ref_host  text not null default '',
+  country   text not null default '',
+  device    text not null default '',   -- mobile | desktop
+  visitor   text not null
+);
+create index if not exists page_views_at on public.page_views (at);
+alter table public.page_views enable row level security;
+revoke all on public.page_views from anon, authenticated;
+
+create table if not exists public.visit_salts (
+  day   date primary key,
+  salt  text not null
+);
+alter table public.visit_salts enable row level security;
+revoke all on public.visit_salts from anon, authenticated;
+
+-- Plugin version / OS reported by newer plugins in their weekly activation check.
+alter table public.activations add column if not exists app_version text not null default '';
+alter table public.activations add column if not exists os text not null default '';
+
+-- Called by the /files/* gate with the downloading user's token.
+create or replace function public.log_download(p_path text)
+returns void
+language plpgsql security definer set search_path = public
+as $$
+declare
+  v_file text;
+  v_slug text;
+begin
+  if auth.uid() is null or p_path is null or p_path !~ '^/files/[a-z0-9-]+/[A-Za-z0-9._-]+$' then return; end if;
+  v_slug := split_part(p_path, '/', 3);
+  v_file := split_part(p_path, '/', 4);
+  insert into download_events (user_id, product_slug, platform, version, path)
+  values (
+    auth.uid(), v_slug,
+    case when v_file ~* '(mac|\.pkg$|\.dmg$)' then 'mac'
+         when v_file ~* '(windows|\.exe$|\.msi$)' then 'windows' else 'other' end,
+    coalesce(substring(v_file from '(\d+\.\d+\.\d+)'), ''),
+    p_path
+  );
+end $$;
+
+-- Called by /api/hit (Cloudflare) for each page view.
+create or replace function public.log_visit(p_path text, p_ref text, p_country text, p_device text, p_client text)
+returns void
+language plpgsql security definer set search_path = public
+as $$
+declare
+  v_salt text;
+begin
+  if p_path is null or p_path !~ '^/[A-Za-z0-9/._-]{0,120}$' then return; end if;
+  select salt into v_salt from visit_salts where day = current_date;
+  if v_salt is null then
+    insert into visit_salts (day, salt) values (current_date, replace(gen_random_uuid()::text, '-', ''))
+    on conflict (day) do nothing;
+    select salt into v_salt from visit_salts where day = current_date;
+    delete from visit_salts where day < current_date;
+  end if;
+  insert into page_views (path, ref_host, country, device, visitor)
+  values (
+    p_path,
+    left(coalesce(case when p_ref ~ '^[a-z0-9.-]{1,100}$' then p_ref end, ''), 100),
+    coalesce(case when p_country ~ '^[A-Z]{2}$' then p_country end, ''),
+    case when p_device in ('mobile', 'desktop') then p_device else '' end,
+    left(encode(extensions.digest(v_salt || '|' || coalesce(p_client, ''), 'sha256'), 'hex'), 24)
+  );
+end $$;
+
+-- Newer plugins also send their version and OS; older ones keep calling with two arguments.
+drop function if exists public.activation_check(text, text);
+create or replace function public.activation_check(p_token text, p_machine text, p_version text default null, p_os text default null)
+returns jsonb
+language plpgsql security definer set search_path = public
+as $$
+begin
+  update activations
+  set last_seen = now(),
+      app_version = coalesce(case when p_version ~ '^\d+\.\d+\.\d+$' then p_version end, app_version),
+      os = coalesce(case when p_os in ('mac', 'windows') then p_os end, os)
+  where token = p_token and machine_id = p_machine;
+  return jsonb_build_object('ok', found);
+end $$;
+
+-- Everything the dashboard shows, for the last p_days days. Admins only.
+create or replace function public.admin_overview(p_days int default 30)
+returns jsonb
+language plpgsql stable security definer set search_path = public
+as $$
+declare
+  v_from timestamptz;
+  v_days int := least(greatest(coalesce(p_days, 30), 1), 365);
+begin
+  if not is_admin() then raise exception 'not_admin'; end if;
+  v_from := date_trunc('day', now()) - (v_days - 1) * interval '1 day';
+  return jsonb_build_object(
+    'days', v_days,
+    'totals', jsonb_build_object(
+      'users',            (select count(*) from auth.users),
+      'users_confirmed',  (select count(*) from auth.users where email_confirmed_at is not null),
+      'users_new',        (select count(*) from auth.users where created_at >= v_from),
+      'active_users',     (select count(*) from auth.users where last_sign_in_at >= v_from),
+      'computers',        (select count(*) from activations),
+      'computers_active', (select count(*) from activations where last_seen >= now() - interval '30 days'),
+      'downloads',        (select count(*) from download_events where at >= v_from),
+      'downloads_all',    (select count(*) from download_events),
+      'downloads_since',  (select min(at) from download_events),
+      'views',            (select count(*) from page_views where at >= v_from),
+      'visitors',         (select coalesce(sum(n), 0) from (select count(distinct visitor) n from page_views where at >= v_from group by at::date) d),
+      'views_since',      (select min(at) from page_views)
+    ),
+    'series', (
+      select coalesce(jsonb_agg(jsonb_build_object(
+        'day', d::date,
+        'signups',   (select count(*) from auth.users u where u.created_at::date = d::date),
+        'downloads', (select count(*) from download_events e where e.at::date = d::date),
+        'views',     (select count(*) from page_views v where v.at::date = d::date),
+        'visitors',  (select count(distinct visitor) from page_views v where v.at::date = d::date)
+      ) order by d), '[]'::jsonb)
+      from generate_series(v_from, date_trunc('day', now()), interval '1 day') d
+    ),
+    'products', (
+      select coalesce(jsonb_agg(jsonb_build_object(
+        'slug', p.slug, 'name', p.name,
+        'users',            (select count(*) from claims c where c.product_slug = p.slug),
+        'computers',        (select count(*) from activations a where a.product_slug = p.slug),
+        'computers_active', (select count(*) from activations a where a.product_slug = p.slug and a.last_seen >= now() - interval '30 days'),
+        'downloads',        (select count(*) from download_events e where e.product_slug = p.slug and e.at >= v_from),
+        'downloads_mac',    (select count(*) from download_events e where e.product_slug = p.slug and e.at >= v_from and e.platform = 'mac'),
+        'downloads_win',    (select count(*) from download_events e where e.product_slug = p.slug and e.at >= v_from and e.platform = 'windows'),
+        'downloads_all',    (select count(*) from download_events e where e.product_slug = p.slug)
+      ) order by p.sort), '[]'::jsonb)
+      from products p
+    ),
+    'download_versions', (
+      select coalesce(jsonb_agg(x order by x->>'product', x->>'version' desc, x->>'platform'), '[]'::jsonb) from (
+        select jsonb_build_object('product', product_slug, 'version', version, 'platform', platform, 'count', count(*)) x
+        from download_events where at >= v_from group by product_slug, version, platform
+      ) t
+    ),
+    'install_versions', (
+      select coalesce(jsonb_agg(x order by x->>'product', x->>'version' desc), '[]'::jsonb) from (
+        select jsonb_build_object('product', product_slug, 'version', coalesce(nullif(app_version, ''), 'unknown'),
+                                  'os', coalesce(nullif(os, ''), 'unknown'), 'count', count(*)) x
+        from activations where last_seen >= now() - interval '30 days'
+        group by product_slug, app_version, os
+      ) t
+    ),
+    'pages', (
+      select coalesce(jsonb_agg(jsonb_build_object('key', path, 'count', n) order by n desc), '[]'::jsonb)
+      from (select path, count(*) n from page_views where at >= v_from group by path order by n desc limit 15) t
+    ),
+    'referrers', (
+      select coalesce(jsonb_agg(jsonb_build_object('key', ref_host, 'count', n) order by n desc), '[]'::jsonb)
+      from (select ref_host, count(*) n from page_views where at >= v_from and ref_host <> '' group by ref_host order by n desc limit 15) t
+    ),
+    'countries', (
+      select coalesce(jsonb_agg(jsonb_build_object('key', country, 'count', n) order by n desc), '[]'::jsonb)
+      from (select country, count(*) n from page_views where at >= v_from and country <> '' group by country order by n desc limit 15) t
+    ),
+    'devices', (
+      select coalesce(jsonb_agg(jsonb_build_object('key', device, 'count', n) order by n desc), '[]'::jsonb)
+      from (select device, count(*) n from page_views where at >= v_from and device <> '' group by device) t
+    )
+  );
+end $$;
+
+-- Registered users with their plugins, computers and downloads. Admins only.
+create or replace function public.admin_users()
+returns table (email text, created_at timestamptz, last_sign_in_at timestamptz, confirmed boolean,
+               plugins text[], computers jsonb, downloads bigint)
+language plpgsql stable security definer set search_path = public
+as $$
+begin
+  if not is_admin() then raise exception 'not_admin'; end if;
+  return query
+  select u.email::text, u.created_at, u.last_sign_in_at, u.email_confirmed_at is not null,
+         coalesce((select array_agg(c.product_slug order by c.claimed_at) from claims c where c.user_id = u.id), '{}'),
+         coalesce((select jsonb_agg(jsonb_build_object('product', a.product_slug, 'name', a.machine_name,
+                     'version', a.app_version, 'os', a.os, 'last_seen', a.last_seen) order by a.created_at)
+                   from activations a where a.user_id = u.id), '[]'::jsonb),
+         (select count(*) from download_events e where e.user_id = u.id)
+  from auth.users u
+  order by u.created_at desc
+  limit 2000;
+end $$;
+
+revoke all on function public.is_admin()                  from public, anon;
+revoke all on function public.log_download(text)          from public, anon;
+revoke all on function public.log_visit(text, text, text, text, text) from public;
+revoke all on function public.activation_check(text, text, text, text) from public;
+revoke all on function public.admin_overview(int)         from public, anon;
+revoke all on function public.admin_users()               from public, anon;
+grant execute on function public.is_admin()               to authenticated;
+grant execute on function public.log_download(text)       to authenticated;
+grant execute on function public.log_visit(text, text, text, text, text) to anon, authenticated;
+grant execute on function public.activation_check(text, text, text, text) to anon, authenticated;
+grant execute on function public.admin_overview(int)      to authenticated;
+grant execute on function public.admin_users()            to authenticated;
 
 -- ── Seed data ────────────────────────────────────────────────────────────
 
