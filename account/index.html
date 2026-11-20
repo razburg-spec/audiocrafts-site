@@ -102,7 +102,7 @@ h1{font-weight:700!important;letter-spacing:-.025em}
 <div class="wrap">
 <header>
 <a class="brand" href="../"><img src="../img/logo.svg" alt=""><div class="name">Raz Burg<b>AudioCrafts</b></div></a>
-<div class="who hidden" id="who"><span id="who-email"></span><button class="btn ghost small" id="signout">Sign out</button></div>
+<div class="who hidden" id="who"><span id="who-email"></span><a class="btn ghost small hidden" id="admin-link" href="/admin/" style="color:var(--amber)">Admin</a><button class="btn ghost small" id="signout">Sign out</button></div>
 </header>
 
 <!-- Accounts not configured yet -->
@@ -344,6 +344,7 @@ h1{font-weight:700!important;letter-spacing:-.025em}
     $("who-email").textContent = session.user.email;
     $("who").classList.remove("hidden");
     show("v-dash");
+    sb.rpc("is_admin").then(function (r) { $("admin-link").classList.toggle("hidden", r.data !== true); });
     var want = pendingClaim();
     if (want) { clearClaim(); await sb.rpc("claim_plugin", { p_slug: want }); }
 
